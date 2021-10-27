@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+<<<<<<< HEAD
   publicRuntimeConfig: {
     HOST_BASE: 'https://jesdakorn.herokuapp.com/',
     API_BASE: 'http://127.0.0.1:8000/',
@@ -24,3 +25,6 @@ module.exports = {
 //     skipWaiting: true,
 //   },
 // });
+=======
+}
+>>>>>>> parent of b0de01e (add file)

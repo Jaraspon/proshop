@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+<<<<<<< HEAD
 import { Provider } from "react-redux";
 import { store } from "@/store/index";
 import Head from 'next/head'
@@ -17,7 +18,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Provider>
     </>
+=======
+>>>>>>> parent of b0de01e (add file)
 
-  )
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
 }
 export default MyApp
