@@ -7,14 +7,3 @@ module.exports = {
     API_HOST: 'http://127.0.0.1:8000/api/',
 },
 }
-
-
-const withPWA = require("next-pwa");
-
-module.exports = withPWA({
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-  },
-});

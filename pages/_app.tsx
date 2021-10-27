@@ -10,8 +10,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Proshop</title>
         <meta name="description" content="Welcome to Proshop" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" />
+        {/* <link rel="manifest" href="/manifest.json" /> */}
+        {/* <meta name="theme-color" /> */}
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
