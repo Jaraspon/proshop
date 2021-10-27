@@ -8,7 +8,6 @@ export default class MyDocument extends Document {
             <Html lang="en" >
                 <Head />
                 <body >
-                      888
                     <Main />
                     <NextScript />
                   
