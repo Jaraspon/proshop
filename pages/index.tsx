@@ -3,10 +3,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
+
+import Layout from '@/components/layout/manage';
 
 
 const Home: NextPage = () => {
@@ -15,10 +17,14 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   console.log(counter);
-  
+
   return (
     <>
-   asfasf
+      <Layout user="dsdddd">
+        
+        asfasf
+
+      </Layout>
 
     </>
   )
