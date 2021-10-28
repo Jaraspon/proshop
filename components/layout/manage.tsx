@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { NextPage } from 'next'
 
-const manage: NextPage = (props) => {
+interface NewsFeedItemProps {
+    user: string
+  }
+
+const manage: NextPage<NewsFeedItemProps> = (props) => {
     console.log(props);
 
     return (
