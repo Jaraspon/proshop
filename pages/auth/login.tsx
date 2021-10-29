@@ -1,11 +1,19 @@
-import styles from '@/styles/Login.module.css'
 import { NextPage } from 'next'
 import React, { useState } from 'react'
 
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
-import { Container, FormControl, Grid, OutlinedInput } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import {
+    Container,
+    FormControl,
+    Grid,
+    OutlinedInput,
+    Theme,
+    Stack,
+    Card,
+    CardContent
+} from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
 interface State {
     amount: string;
     password: string;
@@ -15,21 +23,23 @@ interface State {
 }
 
 
-const useStyles = makeStyles((theme:any) => ({
-    root: {
-        userSelect:'none',
-        '& .box-r':{
-            display:'flex',
-            marginBottom: '10px'
-        }
-    },
-
-}));
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            backgroundColor: '#edf7da',
+            paddingTop: '10px',
+            '& .marked-register': {
+                color: `#9c9c9c !important`,
+                fontWeight: 'bold'
+            }
+        },
+    }),
+);
 
 
 
 const Login = () => {
-    const classs = useStyles();
+    const classes = useStyles();
     const [values, setValues] = useState<State>({
         amount: '',
         password: '',
@@ -39,7 +49,36 @@ const Login = () => {
     })
     return (
         <Layout user={{}} isAuth={false} >
-            <div className={classs.root}>
+            <Stack
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                className={classes.root}
+            >
+
+                <Card variant="outlined">
+                    <CardContent>
+                        <Stack
+                            sx={{mb:1}}
+                            direction={{ xs: 'column', sm: 'row' }}
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            spacing={1}
+                        >
+                            <p>Do you have an account? &nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for PROSHOP</Link>
+                        </Stack>
+                        <p>Username or Email</p>
+                        <FormControl sx={{ width: '25ch' }}>
+                            <OutlinedInput placeholder="Please enter text" />
+
+                        </FormControl>
+                    </CardContent>
+
+
+                </Card>
+            </Stack>
+            <div className={classes.root}>
                 <Container>
                     <div className="box-center">
                         <div className="box-login">

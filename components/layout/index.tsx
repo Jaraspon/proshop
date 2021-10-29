@@ -1,5 +1,3 @@
-
-import styles from '@/styles/Layout.module.css'
 import React, { useState } from 'react'
 import { NextPage } from 'next'
 import { makeStyles } from '@mui/styles';
@@ -32,7 +30,8 @@ interface NewsFeedItemProps {
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    border: '1px solid #e5e8ec',
+    borderRadius: '9px',
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
         backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -71,34 +70,51 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
+
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
     backgroundColor: '#fff',
-    boxShadow: 'none' ,
+    boxShadow: 'none',
     borderBottom: '1px solid rgb(228, 228, 228) ',
-    color: '#616060' ,
-    maxHeight: '64px' ,
-    userSelect: 'none' ,
+    color: '#616060',
+    maxHeight: '64px',
+    userSelect: 'none',
+}));
+
+const StyledBtnIcon = styled(Button)(({ theme }) => ({
+    border: '1px solid #e5e8ec',
+    borderRadius: '9px',
+    color: '#7a7a7a',
+    minWidth: '39px',
+    minHeight: '39px',
+    background: '#fff',
+    '& svg': {
+        fontSize: '1.3rem'
+    }
+}));
+
+const StyledBtn = styled(Button)(({ theme }) => ({
+    border: '1px solid #e5e8ec',
+    borderRadius: '9px',
+    color: '#7a7a7a',
+    minWidth: '39px',
+    minHeight: '39px',
+    background: '#fff',
+    paddingLeft: '15px',
+    paddingRight: '15px',
 }));
 
 
-const useStyles = makeStyles((theme:any) => ({
+const useStyles = makeStyles((theme: any) => ({
     root: {
-     
+
     },
 
 }));
 
 
-const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
-    console.log('user', user);
-    console.log('isAuth', isAuth);
-
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const classs = useStyles();
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const openMenu = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -106,7 +122,6 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
         setAnchorEl(null);
     };
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [state, setState] = useState({
         top: false,
         left: false,
@@ -154,7 +169,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                         </IconButton>
                     </Box> */}
                     <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, mr: 1.5 }}>
-                        <Search className={`${styles.btnAppBar}`}>
+                        <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -166,38 +181,33 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                         <Tooltip title="Shopping cart">
-                            <Button
-                                className={`btn-app-bar ${styles.btnStore}`}
+                            <StyledBtnIcon
                                 id="fade-button"
                             >
                                 <LocalGroceryStoreIcon />
-                            </Button>
+                            </StyledBtnIcon>
                         </Tooltip>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                         <Tooltip title="Change language">
-                            <Button
-                                className={`btn-app-bar ${styles.btnLanguage}`}
+                            <StyledBtnIcon
                                 id="fade-button"
                                 aria-controls="fade-menu"
                                 aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
+                                aria-expanded={openMenu ? 'true' : undefined}
                                 onClick={handleClick}
                             >
                                 <TranslateIcon />
-                            </Button>
+                            </StyledBtnIcon>
                         </Tooltip>
                         <Menu
-                            className={`${styles.menuAppBar}`}
                             id="fade-menu"
                             MenuListProps={{
                                 'aria-labelledby': 'fade-button',
                             }}
                             anchorEl={anchorEl}
-                            open={open}
+                            open={openMenu}
                             onClose={handleClose}
-
-
                         >
                             <MenuItem onClick={handleClose}>English</MenuItem>
                             <MenuItem onClick={handleClose}>中文</MenuItem>
@@ -208,12 +218,11 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
                         <Tooltip title="Login">
-                            <Button
-                                className={`btn-app-bar ${styles.btnLogin}`}
+                            <StyledBtn
                                 id="fade-button"
                             >
                                 Login
-                            </Button>
+                            </StyledBtn>
                         </Tooltip>
                     </Box>
                 </Toolbar>
@@ -222,8 +231,6 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
             <Box display={{ xs: 'block', sm: 'block', md: 'block' }} >
                 <Drawer
                     anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}
-                    className={styles.drawer}
-
                 >
                     {drawer}
                 </Drawer>
@@ -238,5 +245,5 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
     )
 }
 
-export default index
+export default Layout
 
