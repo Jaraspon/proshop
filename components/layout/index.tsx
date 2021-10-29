@@ -2,6 +2,7 @@
 import styles from '@/styles/Layout.module.css'
 import React, { useState } from 'react'
 import { NextPage } from 'next'
+import { makeStyles } from '@mui/styles';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -70,21 +71,31 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-// const StyledAppBar = styled(AppBar)(({ theme }) => ({
-//     background-color: #fff !important;
-//     boxShadow: none !important;
-//     border-bottom: 1px solid rgb(228, 228, 228) !important;
-//     color: #616060 !important;
-//     max-height: 64px !important;
-//     user-select: none !important;
-// }));
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+    backgroundColor: '#fff',
+    boxShadow: 'none' ,
+    borderBottom: '1px solid rgb(228, 228, 228) ',
+    color: '#616060' ,
+    maxHeight: '64px' ,
+    userSelect: 'none' ,
+}));
+
+
+const useStyles = makeStyles((theme:any) => ({
+    root: {
+     
+    },
+
+}));
+
 
 const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
     console.log('user', user);
     console.log('isAuth', isAuth);
 
 
-
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const classs = useStyles();
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -132,7 +143,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
         <>
             <CssBaseline />
 
-            <AppBar position="fixed" sx={{ background: '#fff', boxShadow: 'none' }}>
+            <StyledAppBar position="fixed" >
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Proshop
@@ -207,7 +218,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     </Box>
                 </Toolbar>
 
-            </AppBar>
+            </StyledAppBar>
             <Box display={{ xs: 'block', sm: 'block', md: 'block' }} >
                 <Drawer
                     anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}
