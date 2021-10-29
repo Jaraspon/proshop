@@ -2,16 +2,19 @@ import React, { useState } from 'react'
 import { NextPage } from 'next'
 
 interface NewsFeedItemProps {
-    user: string
-  }
+    user: object,
+    isAuth: boolean
 
-const manage: NextPage<NewsFeedItemProps> = (props) => {
-    console.log(props);
+}
+
+const manage: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
+    console.log('user', user);
+    console.log('isAuth', isAuth);
 
     return (
         <>
 
-            <main>{props.children}</main>
+            <main>{children}</main>
 
         </>
     )
