@@ -70,6 +70,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
+// const StyledAppBar = styled(AppBar)(({ theme }) => ({
+//     background-color: #fff !important;
+//     boxShadow: none !important;
+//     border-bottom: 1px solid rgb(228, 228, 228) !important;
+//     color: #616060 !important;
+//     max-height: 64px !important;
+//     user-select: none !important;
+// }));
 
 const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
     console.log('user', user);
@@ -124,7 +132,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
         <>
             <CssBaseline />
 
-            <AppBar position="fixed" className="app-bar">
+            <AppBar position="fixed" sx={{ background: '#fff', boxShadow: 'none' }}>
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Proshop
