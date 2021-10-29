@@ -124,9 +124,8 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
         <>
             <CssBaseline />
 
-            <AppBar position="fixed" className={styles.appBar}>
+            <AppBar position="fixed" className="app-bar">
                 <Toolbar>
-
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Proshop
                     </Typography>
@@ -149,7 +148,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                         <Tooltip title="Shopping cart">
                             <Button
-                                className={`${styles.btnAppBar} ${styles.btnStore}`}
+                                className={`btn-app-bar ${styles.btnStore}`}
                                 id="fade-button"
                             >
                                 <LocalGroceryStoreIcon />
@@ -159,7 +158,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                         <Tooltip title="Change language">
                             <Button
-                                className={`${styles.btnAppBar} ${styles.btnLanguage}`}
+                                className={`btn-app-bar ${styles.btnLanguage}`}
                                 id="fade-button"
                                 aria-controls="fade-menu"
                                 aria-haspopup="true"
@@ -191,7 +190,7 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
                         <Tooltip title="Login">
                             <Button
-                                className={`${styles.btnAppBar} ${styles.btnLogin}`}
+                                className={`btn-app-bar ${styles.btnLogin}`}
                                 id="fade-button"
                             >
                                 Login
@@ -211,8 +210,8 @@ const index: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                 </Drawer>
             </Box>
             <Toolbar />
-           
-                <main>{children}</main>
+
+            <main>{children}</main>
 
 
 
