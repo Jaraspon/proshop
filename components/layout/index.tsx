@@ -20,6 +20,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import SearchIcon from '@mui/icons-material/Search';
 
+import Link from '@/components/Link'
+import { useRouter } from 'next/router';
+
 interface NewsFeedItemProps {
     user: object,
     isAuth: boolean
@@ -113,6 +116,7 @@ const useStyles = makeStyles((theme: any) => ({
 
 
 const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
+    const router = useRouter();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -161,7 +165,8 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
             <StyledAppBar position="fixed" >
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Proshop
+                        
+                        <Link to="/" style="">PROSHOP</Link>
                     </Typography>
                     {/* <Box display={{ xs: 'block', sm: 'block', md: 'none' }}>
                         <IconButton onClick={toggleDrawer('right', true)} edge="start" className="" color="inherit" aria-label="menu">
@@ -181,9 +186,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                         <Tooltip title="Shopping cart">
-                            <StyledBtnIcon
-                                id="fade-button"
-                            >
+                            <StyledBtnIcon>
                                 <LocalGroceryStoreIcon />
                             </StyledBtnIcon>
                         </Tooltip>
@@ -191,7 +194,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                         <Tooltip title="Change language">
                             <StyledBtnIcon
-                                id="fade-button"
+
                                 aria-controls="fade-menu"
                                 aria-haspopup="true"
                                 aria-expanded={openMenu ? 'true' : undefined}
@@ -218,11 +221,15 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
                         <Tooltip title="Login">
-                            <StyledBtn
-                                id="fade-button"
+
+                            <Button
+                                variant="outlined"
+                                onClick={() => router.push(`/auth/login`)}
                             >
-                                Login
-                            </StyledBtn>
+                               Login
+                            </Button>
+
+
                         </Tooltip>
                     </Box>
                 </Toolbar>

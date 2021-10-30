@@ -37,7 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         let resDB = await db.query('SELECT * FROM users WHERE username = ? or email = ? limit 1', [v.inputs.username, v.inputs.username])
 
-        if (resDB == 0) {
+
+        if (resDB.length == 0) {
             let __res = {
                 status: {
                     success: false,
@@ -50,8 +51,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
 
         let userDB = await resDB.map((val: any, idx: any) => val)[0]
+        
+        let resDBPassword = await db.query('SELECT * FROM password WHERE user_id limit 1', [userDB.id])
+      
+        let passwordDB = await resDBPassword.map((val: any, idx: any) => val)[0]
 
-        let isPassword = bcrypt.compareSync(v.inputs.password, userDB.password);
+
+        
+        let isPassword = bcrypt.compareSync(v.inputs.password, passwordDB.password);
         if (!isPassword) {
             let __res = {
                 status: {

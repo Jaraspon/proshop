@@ -13,7 +13,12 @@ import {
     Stack,
     Card,
     CardContent,
-    TextField
+    TextField,
+    Box,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio
 } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles';
 interface State {
@@ -43,10 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-
-
-
-const Login = () => {
+const Register = () => {
     const classes = useStyles();
     const [values, setValues] = useState<State>({
         amount: '',
@@ -66,7 +68,7 @@ const Login = () => {
 
             >
 
-                <Card variant="outlined"  sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
+                <Card variant="outlined" sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
                     <CardContent>
                         <Stack
                             sx={{ mb: 3 }}
@@ -75,31 +77,61 @@ const Login = () => {
                             alignItems="center"
                             spacing={1}
                         >
-                            <p>Do you have an account? &nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for PROSHOP</Link>
+                            <p>Already have an account? &nbsp; </p><Link to="/auth/login" style="marked-register">Sign in for PROSHOP</Link>
                         </Stack>
                         <TextField
                             sx={{ mb: 2 }}
-                            type="email"
+                            type="text"
                             fullWidth
-                            label="Username or Email"
-                           />
+                            label="Username"
+                        />
                         <TextField
                             sx={{ mb: 2 }}
                             type="password"
                             fullWidth
                             label="Password"
-                           />
+                        />
+                        <TextField
+                            sx={{ mb: 2 }}
+                            type="email"
+                            fullWidth
+                            label="Email"
+                        />
+                        <Box
+                            component="form"
+                            sx={{ display: { xs: 'block', sm: 'flex' } }}
+                            noValidate
+                            autoComplete="off"
+                        >
+                            <TextField
+                                label="First Name"
+                                fullWidth
+                                sx={{ mb: 2, mr: 1 }}
+                            />
+                            <TextField
+                                label="Last Name"
+                                fullWidth
+                                sx={{ mb: 2 }}
+                            />
+                        </Box>
+                        <FormControl component="fieldset" sx={{ mb: 2, pl: 1 }}>
+                            <FormLabel component="legend">Gender</FormLabel>
+                            <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+                                <FormControlLabel  sx={{ mr:5 }} value="female" control={<Radio />} label="Female" />
+                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+
+                            </RadioGroup>
+                        </FormControl>
                         <Button variant="contained" size="large" disableElevation fullWidth>
-                            Login
+                            Register
                         </Button>
                     </CardContent>
 
 
                 </Card>
             </Stack>
-        </Layout >
+        </Layout>
     )
 }
 
-export default Login
-
+export default Register

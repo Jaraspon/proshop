@@ -73,10 +73,9 @@ const store = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 
         let resDB = await db.query(
-            'INSERT INTO users (username,password,email,firstname,lastname,gender,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)',
+            'INSERT INTO users (username,email,firstname,lastname,gender,created_at,updated_at) VALUES (?,?,?,?,?,?,?)',
             [
                 v.inputs.username || '',
-                hashPassword || '',
                 v.inputs.email || '',
                 v.inputs.firstName || '',
                 v.inputs.lastName || '',
@@ -86,15 +85,31 @@ const store = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             ]
         );
 
-        let __res = {
-            status: {
-                success: true,
-                message: ''
-            },
-            data: { resDB },
-            timestamp: Math.floor(Date.now() / 1000)
+        
+        if (resDB.insertId != 0) {
+            let resDBPassword = await db.query(
+                'INSERT INTO password (user_id,password,created_at,updated_at) VALUES (?,?,?,?)',
+                [
+                    resDB.insertId,
+                    hashPassword || '',
+                    timestamp,
+                    timestamp
+                ]
+            );
+            let __res = {
+                status: {
+                    success: true,
+                    message: ''
+                },
+                data: { resDB },
+                timestamp: Math.floor(Date.now() / 1000)
+            }
+            res.status(200).json(__res)
+
         }
-        res.status(200).json(__res)
+
+
+
 
     } catch (err) {
         let __res = {
