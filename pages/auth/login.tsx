@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import React, { useState } from 'react'
 
+const axios = require('axios');
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
 import {
@@ -25,6 +26,7 @@ interface State {
 }
 
 
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
+
 const Login = () => {
     const classes = useStyles();
     const [values, setValues] = useState<State>({
@@ -55,6 +58,25 @@ const Login = () => {
         weightRange: '',
         showPassword: false,
     })
+    const [dataForm, setDataForm] = useState({
+        username: '',
+        password: ''
+    })
+
+    const login = (e: any): void => {
+        console.log(dataForm);
+
+        alert('The name you entered was: ${name}');
+        e.preventDefault();
+        axios.post('/api/auth/login', dataForm).then(function (response: any) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+
+
     return (
         <Layout user={{}} isAuth={false} >
             <Stack
@@ -66,32 +88,36 @@ const Login = () => {
 
             >
 
-                <Card variant="outlined"  sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
+                <Card variant="outlined" sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
                     <CardContent>
-                        <Stack
-                            sx={{ mb: 3 }}
-                            direction={{ xs: 'column', sm: 'row' }}
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            spacing={1}
-                        >
-                            <p>Do you have an account? &nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for PROSHOP</Link>
-                        </Stack>
-                        <TextField
-                            sx={{ mb: 2 }}
-                            type="email"
-                            fullWidth
-                            label="Username or Email"
-                           />
-                        <TextField
-                            sx={{ mb: 2 }}
-                            type="password"
-                            fullWidth
-                            label="Password"
-                           />
-                        <Button variant="contained" size="large" disableElevation fullWidth>
-                            Login
-                        </Button>
+                        <form onSubmit={login}>
+                            <Stack
+                                sx={{ mb: 3 }}
+                                direction={{ xs: 'column', sm: 'row' }}
+                                justifyContent="flex-start"
+                                alignItems="center"
+                                spacing={1}
+                            >
+                                <p>Do you have an account? &nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for PROSHOP</Link>
+                            </Stack>
+                            <TextField
+                                sx={{ mb: 2 }}
+                                type="email"
+                                fullWidth
+                                label="Username or Email"
+                                onChange={e => setDataForm({ ...dataForm, ['username']: e.target.value })}
+                            />
+                            <TextField
+                                sx={{ mb: 2 }}
+                                type="password"
+                                fullWidth
+                                label="Password"
+                                onChange={e => setDataForm({ ...dataForm, ['password']: e.target.value })}
+                            />
+                            <Button type="submit" variant="contained" size="large" disableElevation fullWidth>
+                                Login
+                            </Button>
+                        </form>
                     </CardContent>
 
 
