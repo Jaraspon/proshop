@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         });
         const matched = await v.check();
         if (!matched) {
-            res.status(422).send(v.errors);
+            res.status(200).send(v.errors);
             return;
         }
 
@@ -62,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         if (!isPassword) {
             let __res = {
                 status: {
-                    success: true,
+                    success: false,
                     message: 'The password is incorrect.'
                 },
                 timestamp: Math.floor(Date.now() / 1000)
@@ -86,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 success: true,
                 message: ''
             },
-            data: {
+            user: {
                 id: userDB.id,
                 username: userDB.username,
                 token: token,
