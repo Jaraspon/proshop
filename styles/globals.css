@@ -53,6 +53,11 @@ p {
 
 main {}
 
+.fa-flip-horizontal {
+    -webkit-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
+
 .input-bg div {
     background-color: #fff;
 }
