@@ -40,6 +40,13 @@ const theme = createTheme({
                     minWidth: '39px',
                     minHeight: '39px',
                     borderRadius: '9px',
+                    '&.Mui-disabled':{
+                        color: 'rgba(0, 0, 0, 0.26) !important',
+                        opacity: '0.6'
+                    },
+                    '&.MuiLoadingButton-loading':{
+                        color: 'transparent !important'
+                    }
                 },
             },
             variants: [
