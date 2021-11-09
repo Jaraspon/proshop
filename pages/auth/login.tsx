@@ -178,8 +178,15 @@ const Login = () => {
                                 spacing={1}
                             >
 
-                                <Logo />
-
+                                {/* <Logo /> */}
+                                <Box component="div" className={classes.root}>
+                                    <Box component="span" className="iconDog">
+                                        <i className="fas fa-dog fa-flip-horizontal"></i>
+                                    </Box>
+                                    <Box component="span" className="iconCat">
+                                        <i className="fas fa-cat"></i>
+                                    </Box>
+                                </Box>
 
                             </Stack>
                             <Stack
@@ -246,7 +253,7 @@ const Login = () => {
                             >
                                 Login
                             </LoadingButton>
-                       
+
                         </form>
                     </Box>
                 </Stack>
