@@ -1,5 +1,5 @@
 import { Box } from '@mui/system'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material';
 
@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Logo = () => {
     const classes = useStyles();
+
+    useEffect(() => {
+       console.log('logo');
+       
+    }, [])
     return (
         <Box component="div" className={classes.root}>
             <Box component="span" className="iconDog">
