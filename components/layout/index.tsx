@@ -25,7 +25,8 @@ import { useRouter } from 'next/router';
 
 interface NewsFeedItemProps {
     user: object,
-    isAuth: boolean
+    isAuth: boolean,
+    showLayout?: boolean
 
 }
 
@@ -115,7 +116,7 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 
-const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
+const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayout = true }) => {
     const router = useRouter();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl);
@@ -161,88 +162,86 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth }) => {
     return (
         <>
             <CssBaseline />
+            {showLayout && (<>
+                <StyledAppBar position="fixed" >
+                    <Toolbar>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 
-            <StyledAppBar position="fixed" >
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        
-                        <Link to="/" style="">PROSHOP</Link>
-                    </Typography>
-                    {/* <Box display={{ xs: 'block', sm: 'block', md: 'none' }}>
-                        <IconButton onClick={toggleDrawer('right', true)} edge="start" className="" color="inherit" aria-label="menu">
-                            <MenuIcon />
-                        </IconButton>
-                    </Box> */}
-                    <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, mr: 1.5 }}>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
-                        <Tooltip title="Shopping cart">
-                            <StyledBtnIcon>
-                                <LocalGroceryStoreIcon />
-                            </StyledBtnIcon>
-                        </Tooltip>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
-                        <Tooltip title="Change language">
-                            <StyledBtnIcon
+                            <Link to="/" style="">PROSHOP</Link>
+                        </Typography>
+                        <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, mr: 1.5 }}>
+                            <Search>
+                                <SearchIconWrapper>
+                                    <SearchIcon />
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Search…"
+                                    inputProps={{ 'aria-label': 'search' }}
+                                />
+                            </Search>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
+                            <Tooltip title="Shopping cart">
+                                <StyledBtnIcon>
+                                    <LocalGroceryStoreIcon />
+                                </StyledBtnIcon>
+                            </Tooltip>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
+                            <Tooltip title="Change language">
+                                <StyledBtnIcon
 
-                                aria-controls="fade-menu"
-                                aria-haspopup="true"
-                                aria-expanded={openMenu ? 'true' : undefined}
-                                onClick={handleClick}
+                                    aria-controls="fade-menu"
+                                    aria-haspopup="true"
+                                    aria-expanded={openMenu ? 'true' : undefined}
+                                    onClick={handleClick}
+                                >
+                                    <TranslateIcon />
+                                </StyledBtnIcon>
+                            </Tooltip>
+                            <Menu
+                                id="fade-menu"
+                                MenuListProps={{
+                                    'aria-labelledby': 'fade-button',
+                                }}
+                                anchorEl={anchorEl}
+                                open={openMenu}
+                                onClose={handleClose}
                             >
-                                <TranslateIcon />
-                            </StyledBtnIcon>
-                        </Tooltip>
-                        <Menu
-                            id="fade-menu"
-                            MenuListProps={{
-                                'aria-labelledby': 'fade-button',
-                            }}
-                            anchorEl={anchorEl}
-                            open={openMenu}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleClose}>English</MenuItem>
-                            <MenuItem onClick={handleClose}>中文</MenuItem>
-                            <MenuItem onClick={handleClose}>Thai</MenuItem>
-                            <Divider />
-                            <MenuItem onClick={handleClose}>Help to translate</MenuItem>
-                        </Menu>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-                        <Tooltip title="Login">
+                                <MenuItem onClick={handleClose}>English</MenuItem>
+                                <MenuItem onClick={handleClose}>中文</MenuItem>
+                                <MenuItem onClick={handleClose}>Thai</MenuItem>
+                                <Divider />
+                                <MenuItem onClick={handleClose}>Help to translate</MenuItem>
+                            </Menu>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
+                            <Tooltip title="Login">
 
-                            <Button
-                                variant="outlined"
-                                onClick={() => router.push(`/auth/login`)}
-                            >
-                               Login
-                            </Button>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => router.push(`/auth/login`)}
+                                >
+                                    Login
+                                </Button>
 
 
-                        </Tooltip>
-                    </Box>
-                </Toolbar>
+                            </Tooltip>
+                        </Box>
+                    </Toolbar>
 
-            </StyledAppBar>
-            <Box display={{ xs: 'block', sm: 'block', md: 'block' }} >
-                <Drawer
-                    anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}
-                >
-                    {drawer}
-                </Drawer>
-            </Box>
-            <Toolbar />
+                </StyledAppBar>
+                <Box display={{ xs: 'block', sm: 'block', md: 'block' }} >
+                    <Drawer
+                        anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}
+                    >
+                        {drawer}
+                    </Drawer>
+                </Box><Toolbar />
+            </>)
+            }
+
+
 
             <main>{children}</main>
 

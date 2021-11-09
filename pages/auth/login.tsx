@@ -6,6 +6,8 @@ import Cookies from 'js-cookie'
 const axios = require('axios');
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
+import Logo from '@/components/Logo'
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
     Container,
     FormControl,
@@ -28,6 +30,7 @@ import {
 } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Box } from '@mui/system';
 
 interface State {
     amount: string;
@@ -42,12 +45,15 @@ interface State {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            backgroundColor: `${theme.palette.primary.main}68`,
-            minHeight: 'calc(100vh - 64px) ',
+            // backgroundColor: `${theme.palette.primary.main}68`,
+            minHeight: 'calc(100vh) ',
+            // minHeight: 'calc(100vh - 64px) ',
             paddingTop: '10px',
+            paddingBottom: '30px',
             justifyContent: 'center',
             ['@media (max-width: 599px) ']: {
-                minHeight: 'calc(100vh - 56px) ',
+                minHeight: 'calc(100vh) ',
+                // minHeight: 'calc(100vh - 56px) ',
             },
             '& .marked-register': {
                 color: `${theme.palette.primary.main} !important`,
@@ -58,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
                 '&:hover fieldset': {
                     borderColor: `${theme.palette.primary.main}`
                 }
+            },
+            '& .input-bg div': {
+                backgroundColor: `#fff`,
+
             },
         },
     }),
@@ -73,6 +83,7 @@ function TransitionLeft(props: TransitionProps) {
 const Login = () => {
     const classes = useStyles();
     const router = useRouter();
+    const [loading, setLoading] = React.useState(false);
     const [transition, setTransition] = React.useState<React.ComponentType<TransitionProps> | undefined>(undefined);
     const [errorInputStatus, setErrorInputStatus] = useState({ username: false, password: false })
     const [errorInputMess, setErrorInputMess] = useState({ username: '', password: '' })
@@ -101,6 +112,7 @@ const Login = () => {
 
     const submitLogin = (e: any): void => {
         e.preventDefault();
+        setLoading(true)
         axios.post('/api/auth/login', { username: dataForm.username, password: dataForm.password }).then(function (res: any) {
             const _res = res.data
             console.log(_res);
@@ -130,6 +142,7 @@ const Login = () => {
             }
             setTransition(() => TransitionLeft);
             console.log(alert);
+            setLoading(fales)
 
             // router.push(`/`)
         }).catch(function (error: any) {
@@ -155,53 +168,68 @@ const Login = () => {
     };
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+        // event.preventDefault();
     };
 
     return (
-        <Layout user={{}} isAuth={false} >
-            <Stack
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="center"
-                spacing={1}
-                className={classes.root}
+        <Layout user={{}} isAuth={false} showLayout={false}>
+            <Container fixed>
+                <Stack
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={1}
+                    className={classes.root}
 
-            >
+                >
 
-                <Card variant="outlined" sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
-                    <CardContent>
+                    {/* <Card variant="outlined" sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
+                    <CardContent> */}
+                    <Box component="div" sx={{ maxWidth: 420 }}>
                         <form onSubmit={submitLogin} className="user-select">
+                            <Stack
+                                sx={{ mb: 3 }}
+                                direction="column"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                                spacing={1}
+                            >
+
+                                <Logo />
+
+
+                            </Stack>
                             <Stack
                                 sx={{ mb: 3 }}
                                 direction={{ xs: 'column', sm: 'row' }}
                                 justifyContent="flex-start"
                                 alignItems="center"
                                 spacing={1}
-                                className="    user-select: none;"
                             >
-                                <p>Do you have an account? &nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for PROSHOP</Link>
+                                <p>Do you have an account?&nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></Link>
                             </Stack>
 
                             <TextField
                                 id="username"
-                                className="input-hover"
+                                className="input-hover input-bg"
                                 sx={{ mb: 2 }}
                                 type="text"
                                 fullWidth
-                                label="Username or Email"
+                                placeholder="Username or Email"
+                                // label="Username or Email"
                                 onChange={e => setDataForm({ ...dataForm, ['username']: e.target.value })}
                             />
-                            <FormControl fullWidth sx={{ mb: 2 }} className="input-hover">
-                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <FormControl fullWidth sx={{ mb: 4 }} className="input-hover input-bg">
+                                {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
                                 <OutlinedInput
 
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
                                     onChange={e => setDataForm({ ...dataForm, ['password']: e.target.value })}
                                     endAdornment={
-                                        <InputAdornment position="end">
+                                        <InputAdornment position="end"  >
                                             <IconButton
+                                                color="primary"
                                                 aria-label="toggle password visibility"
                                                 onClick={handleClickShowPassword}
                                                 onMouseDown={handleMouseDownPassword}
@@ -212,18 +240,28 @@ const Login = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     }
-                                    label="Password"
+                                    // label="Password"
+                                    placeholder="Password"
                                 />
                             </FormControl>
-                            <Button disabled={dataForm.disabled} type="submit" variant="contained" size="large" disableElevation fullWidth>
+                            {/* <Button > */}
+                                <LoadingButton
+                                    className="btn-login" disabled={dataForm.disabled} type="submit" variant="contained" size="large" disableElevation fullWidth
+                                    loading={loading}
+                        
+                                >
+                                    disabled
+                                </LoadingButton>
                                 Login
-                            </Button>
+                            {/* </Button> */}
                         </form>
-                    </CardContent>
+                        {/* </CardContent>
 
 
-                </Card>
-            </Stack>
+                </Card> */}
+                    </Box>
+                </Stack>
+            </Container>
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={open}
@@ -237,6 +275,7 @@ const Login = () => {
                 </Alert>
 
             </Snackbar>
+
         </Layout >
     )
 }

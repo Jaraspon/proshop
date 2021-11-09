@@ -33,12 +33,14 @@ interface State {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            backgroundColor: `${theme.palette.primary.main}68`,
-            minHeight: 'calc(100vh - 64px) ',
+            // backgroundColor: `${theme.palette.primary.main}68`,
+            // minHeight: 'calc(100vh - 64px) ',
+            minHeight: 'calc(100vh) ',
             paddingTop: '10px',
             justifyContent: 'center',
             ['@media (max-width: 599px) ']: {
-                minHeight: 'calc(100vh - 56px) ',
+                // minHeight: 'calc(100vh - 56px) ',
+                minHeight: 'calc(100vh) ',
             },
             '& .marked-register': {
                 color: `${theme.palette.primary.main} !important`,
@@ -79,7 +81,7 @@ const Register = () => {
 
     }
     return (
-        <Layout user={{}} isAuth={false} >
+        <Layout user={{}} isAuth={false} showLayout={false}>
             <Stack
                 direction="column"
                 justifyContent="flex-start"

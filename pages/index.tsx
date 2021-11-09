@@ -26,8 +26,8 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
   return (
     <>
       <Layout user={auth?.user} isAuth={auth?.isAuth}>
-
-        asfasf
+{process.env.NEXT_PUBLIC_JWT_EXP}
+        
 
       </Layout>
 

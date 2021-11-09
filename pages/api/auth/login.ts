@@ -37,7 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         let resDB = await db.query('SELECT * FROM users WHERE username = ? or email = ? limit 1', [v.inputs.username, v.inputs.username])
 
-
         if (resDB.length == 0) {
             let __res = {
                 status: {
@@ -51,14 +50,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
 
         let userDB = await resDB.map((val: any, idx: any) => val)[0]
-        
+
         let resDBPassword = await db.query('SELECT * FROM password WHERE user_id limit 1', [userDB.id])
-      
+
         let passwordDB = await resDBPassword.map((val: any, idx: any) => val)[0]
 
 
-        
         let isPassword = bcrypt.compareSync(v.inputs.password, passwordDB.password);
+
         if (!isPassword) {
             let __res = {
                 status: {
@@ -80,7 +79,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             email: userDB.email
         }
 
-        var token = jwt.sign(dataJwt, JWT.key, { expiresIn: JWT.exp });
+        // var token = jwt.sign(dataJwt, JWT.key, { expiresIn: JWT.exp });
+        var token = jwt.sign(dataJwt, process.env.NEXT_PUBLIC_JWT_KEY, { expiresIn: process.env.NEXT_PUBLIC_JWT_EXP });
+ 
         let __res = {
             status: {
                 success: true,
@@ -89,6 +90,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             user: {
                 id: userDB.id,
                 username: userDB.username,
+                firstname: userDB.firstname,
+                lastname: userDB.lastname,
+                fullname: `${userDB.firstname} ${userDB.lastname}`,
+                email:userDB.email,
                 token: token,
             },
             timestamp: Math.floor(Date.now() / 1000)
