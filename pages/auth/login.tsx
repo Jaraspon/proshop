@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie'
 
+var local = require('local-storage');
+
 const axios = require('axios');
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
@@ -65,10 +67,6 @@ const useStyles = makeStyles((theme: Theme) =>
                     borderColor: `${theme.palette.primary.main}`
                 }
             },
-            '& .input-bg div': {
-                backgroundColor: `#fff`,
-
-            },
         },
     }),
 );
@@ -110,39 +108,28 @@ const Login = () => {
     const { vertical, horizontal, open } = alert;
 
 
+    const changeInput = (e: any) => {
+        e.preventDefault();
+        let key = e.target.name;
+        let value = e.target.value;
+        setDataForm({ ...dataForm, [key]: value })
+    }
+
     const submitLogin = (e: any): void => {
         e.preventDefault();
         setLoading(true)
         axios.post('/api/auth/login', { username: dataForm.username, password: dataForm.password }).then(function (res: any) {
             const _res = res.data
-            console.log(_res);
-            if (_res?.username?.message != '') {
-                console.log('u');
-                // setErrorInputStatus({ username: true, password: fa })
-                // setErrorInputMess({ ...errorInputMess, username: _res?.username?.message })
-            }
-            if (_res?.password?.message != '') {
-                console.log('p');
-                // setErrorInputStatus({ password: true })
-                // setErrorInputMess({ ...errorInputMess, password: _res?.username?.message })
-            }
-            if (_res?.username?.message != '' && _res?.password?.message != '') {
-                console.log('u p');
-
-            }
-
             if (_res?.status?.success) {
                 setAlert({ ...alert, open: false, mess: _res?.status?.message });
-                Cookies.set('auth', _res.user.token)
-
+                local.set('pethouse_auth', _res.user.token);
             } else {
                 console.log('w');
 
                 setAlert({ ...alert, open: true, mess: _res?.status?.message });
             }
             setTransition(() => TransitionLeft);
-            console.log(alert);
-            setLoading(fales)
+            setLoading(false)
 
             // router.push(`/`)
         }).catch(function (error: any) {
@@ -150,21 +137,16 @@ const Login = () => {
         });
     }
     useEffect(() => {
-
         if (dataForm.username != '' && dataForm.password != '' && dataForm.password.length >= 6) {
             setDataForm({ ...dataForm, disabled: false })
-        } else {
-            setDataForm({ ...dataForm, disabled: true })
+            return;
         }
-        console.log('dd', dataForm);
+        setDataForm({ ...dataForm, disabled: true })
     }, [dataForm.username, dataForm.password])
 
 
     const handleClickShowPassword = () => {
-        setValues({
-            ...values,
-            showPassword: !values.showPassword,
-        });
+        setValues({ ...values, showPassword: !values.showPassword, });
     };
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -183,8 +165,7 @@ const Login = () => {
 
                 >
 
-                    {/* <Card variant="outlined" sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
-                    <CardContent> */}
+
                     <Box component="div" sx={{ maxWidth: 420 }}>
                         <form onSubmit={submitLogin} className="user-select">
                             <Stack
@@ -206,7 +187,7 @@ const Login = () => {
                                 alignItems="center"
                                 spacing={1}
                             >
-                                <p>Do you have an account?&nbsp; </p><Link to="/auth/register" style="marked-register">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></Link>
+                                <p>Do you have an account? </p><Link to="/auth/register" style="marked-register">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></Link>
                             </Stack>
 
                             <TextField
@@ -216,8 +197,11 @@ const Login = () => {
                                 type="text"
                                 fullWidth
                                 placeholder="Username or Email"
-                                // label="Username or Email"
-                                onChange={e => setDataForm({ ...dataForm, ['username']: e.target.value })}
+                                name="username"
+                                inputProps={{
+                                    'data-key': 'username'
+                                }}
+                                onChange={changeInput}
                             />
                             <FormControl fullWidth sx={{ mb: 4 }} className="input-hover input-bg">
                                 {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
@@ -225,7 +209,11 @@ const Login = () => {
 
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
-                                    onChange={e => setDataForm({ ...dataForm, ['password']: e.target.value })}
+                                    name="password"
+                                    inputProps={{
+                                        'data-key': 'password'
+                                    }}
+                                    onChange={changeInput}
                                     endAdornment={
                                         <InputAdornment position="end"  >
                                             <IconButton
@@ -240,25 +228,23 @@ const Login = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     }
-                                    // label="Password"
+
                                     placeholder="Password"
                                 />
                             </FormControl>
-                            {/* <Button > */}
-                                <LoadingButton
-                                    className="btn-login" disabled={dataForm.disabled} type="submit" variant="contained" size="large" disableElevation fullWidth
-                                    loading={loading}
-                        
-                                >
-                                    disabled
-                                </LoadingButton>
+                            <LoadingButton
+                                className="btn-main"
+                                disabled={dataForm.disabled}
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                disableElevation
+                                fullWidth
+                                loading={loading}
+                            >
                                 Login
-                            {/* </Button> */}
+                            </LoadingButton>
                         </form>
-                        {/* </CardContent>
-
-
-                </Card> */}
                     </Box>
                 </Stack>
             </Container>

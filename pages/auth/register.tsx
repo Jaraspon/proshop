@@ -1,8 +1,9 @@
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
     Container,
     FormControl,
@@ -18,8 +19,11 @@ import {
     FormLabel,
     RadioGroup,
     FormControlLabel,
-    Radio
+    Radio,
+    InputAdornment,
+    IconButton
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createStyles, makeStyles } from '@mui/styles';
 interface State {
     amount: string;
@@ -57,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const Register = () => {
     const classes = useStyles();
+    const [loading, setLoading] = React.useState(false);
     const [values, setValues] = useState<State>({
         amount: '',
         password: '',
@@ -71,26 +76,56 @@ const Register = () => {
         email: '',
         firstname: '',
         lastname: '',
-        gender: ''
+        gender: 0,
+        disabled: true
     })
+
+    const handleClickShowPassword = () => {
+        setValues({
+            ...values,
+            showPassword: !values.showPassword,
+        });
+    };
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        // event.preventDefault();
+    };
+
+    const changeInput = (e: any) => {
+        e.preventDefault();
+        let key = e.target.name;
+        let value = e.target.value;
+        setDataForm({ ...dataForm, [key]: value })
+    }
 
     const submitRegister = (e: any): void => {
         e.preventDefault();
-        console.log('d');
-
-
+        setLoading(true)
     }
+
+    useEffect(() => {
+        var regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        console.log(regex.test(dataForm.email));
+
+        if (dataForm.username != '' && dataForm.password != '' && dataForm.password.length >= 6 && dataForm.email != '' && regex.test(dataForm.email) && dataForm.firstname != '' && dataForm.lastname != '' && dataForm.gender != 0) {
+            setDataForm({ ...dataForm, disabled: false })
+        } else {
+            setDataForm({ ...dataForm, disabled: true })
+        }
+        console.log('dd', dataForm);
+    }, [dataForm.username, dataForm.password, dataForm.email, dataForm.firstname, dataForm.lastname, dataForm.gender])
+
     return (
         <Layout user={{}} isAuth={false} showLayout={false}>
-            <Stack
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="center"
-                spacing={1}
-                className={classes.root}
-            >
-                <Card variant="outlined" sx={{ borderRadius: 5, py: { xs: 3, sm: 3 }, px: { xs: 1, sm: 3 }, maxWidth: 500, m: { xs: 1 } }}>
-                    <CardContent>
+            <Container fixed>
+                <Stack
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={1}
+                    className={classes.root}
+                >
+                    <Box component="div" sx={{ maxWidth: 420 }}>
                         <form onSubmit={submitRegister} className="user-select">
                             <Stack
                                 sx={{ mb: 3 }}
@@ -99,63 +134,127 @@ const Register = () => {
                                 alignItems="center"
                                 spacing={1}
                             >
-                                <p>Already have an account? &nbsp; </p><Link to="/auth/login" style="marked-register">Sign in for PROSHOP</Link>
+                                <p>Already have an account? </p><Link to="/auth/login" style="marked-register">Sign in for PROSHOP</Link>
                             </Stack>
                             <TextField
-                                className="input-hover"
+                                className="input-hover input-bg"
                                 sx={{ mb: 2 }}
                                 type="text"
                                 fullWidth
-                                label="Username"
+                                label=""
+                                placeholder="Username"
+                                name="username"
+                                inputProps={{
+                                    'data-key': 'username'
+                                }}
+                                onChange={changeInput}
                             />
+                            <FormControl fullWidth sx={{ mb: 2 }} className="input-hover input-bg">
+                                {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
+                                <OutlinedInput
+                                    name="password"
+                                    id="outlined-adornment-password"
+                                    type={values.showPassword ? 'text' : 'password'}
+                                    onChange={changeInput}
+                                    endAdornment={
+                                        <InputAdornment position="end"  >
+                                            <IconButton
+                                                color="primary"
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                                sx={{ mr: 0.1 }}
+                                            >
+                                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    placeholder="Password"
+                                />
+                            </FormControl>
+
                             <TextField
-                                className="input-hover"
-                                sx={{ mb: 2 }}
-                                type="password"
-                                fullWidth
-                                label="Password"
-                            />
-                            <TextField
-                               className="input-hover"
+                                className="input-hover input-bg"
                                 sx={{ mb: 2 }}
                                 type="email"
                                 fullWidth
-                                label="Email"
+                                label=""
+                                placeholder="Email"
+                                name="email"
+                                inputProps={{
+                                    'data-key': 'email'
+                                }}
+                                onChange={changeInput}
                             />
                             <Box
                                 component="span"
                                 sx={{ display: { xs: 'block', sm: 'flex' } }}
                             >
                                 <TextField
-                                   className="input-hover"
-                                    label="First Name"
+                                    className="input-hover input-bg"
+                                    label=""
                                     fullWidth
                                     sx={{ mb: 2, mr: 1 }}
+                                    placeholder="First Name"
+                                    name="firstname"
+                                    inputProps={{
+                                        'data-key': 'firstname'
+                                    }}
+                                    onChange={changeInput}
                                 />
                                 <TextField
-                                   className="input-hover"
-                                    label="Last Name"
+                                    className="input-hover input-bg"
+                                    label=""
                                     fullWidth
                                     sx={{ mb: 2 }}
+                                    placeholder="Last Name"
+                                    name="lastname"
+                                    inputProps={{
+                                        'data-key': 'lastname'
+                                    }}
+                                    onChange={changeInput}
                                 />
                             </Box>
                             <FormControl component="fieldset" sx={{ mb: 2, pl: 1 }}>
                                 <FormLabel component="legend">Gender</FormLabel>
-                                <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
-                                    <FormControlLabel sx={{ mr: 5 }} value="female" control={<Radio />} label="Female" />
-                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                <RadioGroup row aria-label="gender"
+                                    name="gender"
+                                    onChange={changeInput}
+                                >
+                                    <FormControlLabel
+                                        sx={{ mr: 5 }}
+                                        value="1"
+                                        control={<Radio />}
+                                        label="Female"
+
+
+                                    />
+                                    <FormControlLabel
+                                        value="2"
+                                        control={<Radio />}
+                                        label="Male"
+
+                                    />
 
                                 </RadioGroup>
                             </FormControl>
-                            <Button type="submit" variant="contained" size="large" disableElevation fullWidth>
+                            <LoadingButton
+                                className="btn-main"
+                                disabled={dataForm.disabled}
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                disableElevation
+                                fullWidth
+                                loading={loading}
+                            >
                                 Register
-                            </Button>
+                            </LoadingButton>
                         </form>
-                    </CardContent>
-
-
-                </Card>
-            </Stack>
+                    </Box>
+                </Stack>
+            </Container>
         </Layout>
     )
 }

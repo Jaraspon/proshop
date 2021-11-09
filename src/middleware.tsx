@@ -1,3 +1,12 @@
+import React from 'react'
+
+export default function middleware() {
+    return (
+        <div>
+            
+        </div>
+    )
+}
 // import Cookies from 'js-cookie'
 // import { useEffect, useState } from 'react'
 // import { useRouter } from 'next/router';
@@ -34,46 +43,35 @@
 //     }, [])
 // }
 
-import React from 'react'
+// export async function getMiddleware(cookieApi) {
+//     let cookieKey = cookie.parse(cookieApi)
+//     let token = null
+//     let isAuth = null
+//     let user = null
 
-export default function middleware() {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+//     await axios.get(`${env.API_HOST}auth/profile`, {
+//         headers: {
+//             'Authorization': `bearer ${cookieKey['k_user']}`
+//         }
+//     }).then((res) => {
+//         if (res.data.status.success) {
+//             token = cookieKey['k_user']
+//             isAuth = true
+//             user = res.data.user
+//         } else {
+//             token = null
+//             isAuth = false
+//             user = null
 
+//         }
 
-export async function getMiddleware(cookieApi) {
-    let cookieKey = cookie.parse(cookieApi)
-    let token = null
-    let isAuth = null
-    let user = null
-
-    await axios.get(`${env.API_HOST}auth/profile`, {
-        headers: {
-            'Authorization': `bearer ${cookieKey['k_user']}`
-        }
-    }).then((res) => {
-        if (res.data.status.success) {
-            token = cookieKey['k_user']
-            isAuth = true
-            user = res.data.user
-        } else {
-            token = null
-            isAuth = false
-            user = null
-
-        }
-
-    }).catch((error) => {
-        console.log('error')
-        token = null
-        isAuth = false
-        user = null
-        Cookies.remove('k_user')
-    })
-    // let item = { token, isAuth, user };
-    return { token, isAuth, user }
-}
+//     }).catch((error) => {
+//         console.log('error')
+//         token = null
+//         isAuth = false
+//         user = null
+//         Cookies.remove('k_user')
+//     })
+//     // let item = { token, isAuth, user };
+//     return { token, isAuth, user }
+// }
