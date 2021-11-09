@@ -134,6 +134,7 @@ const Login = () => {
             // router.push(`/`)
         }).catch(function (error: any) {
             console.log(error);
+            setLoading(false)
         });
     }
     useEffect(() => {

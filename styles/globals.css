@@ -68,7 +68,7 @@ main {}
     /* For Firefox 3.6 to 15 */
     background: linear-gradient(140deg, #8bb3fc, #86ccfc);
     /* Standard syntax */
-    color: #fff;
+    color: #fff !important;
 }
 
 .text-uppercase {
