@@ -18,14 +18,20 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="Welcome to Proshop" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
-
-      <script src="/assets/fontawesome/original/all.js" ></script>
+        <script src="/assets/fontawesome/original/solid.js"></script>
+        <script src="/assets/fontawesome/original/regular.js"></script>
+        <script src="/assets/fontawesome/original/light.js"></script>
+        <script src="/assets/fontawesome/original/brands.js"></script>
+        <script src="/assets/fontawesome/original/duotone.js"></script>
+        <script src="/assets/fontawesome/original/fontawesome.js"></script>
       </Head>
-        <ThemeProvider theme={theme}>
-          <Provider store={store} >
-            <Component {...pageProps} />
-          </Provider>
-        </ThemeProvider>
+      {/* <Script src="https://kit.fontawesome.com/fb45de22ea.js" ></Script> */}
+      {/* <Script src="/assets/fontawesome/original/all.js" ></Script> */}
+      <ThemeProvider theme={theme}>
+        <Provider store={store} >
+          <Component {...pageProps} />
+        </Provider>
+      </ThemeProvider>
     </>
 
   )
