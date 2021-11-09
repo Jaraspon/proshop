@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider } from "react-redux";
@@ -18,8 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
 
+      <script src="/assets/fontawesome/original/all.js" ></script>
       </Head>
-      <Script src="/assets/fontawesome/original/all.js" ></Script>
         <ThemeProvider theme={theme}>
           <Provider store={store} >
             <Component {...pageProps} />

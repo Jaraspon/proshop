@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Cookies from 'js-cookie'
 
 var local = require('local-storage');
-import Script from 'next/script'
+
 const axios = require('axios');
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
@@ -157,7 +157,7 @@ const Login = () => {
 
     return (
         <Layout user={{}} isAuth={false} showLayout={false}>
-            <Script src="/assets/fontawesome/original/all.js" ></Script>
+          
             <Container fixed>
                 <Stack
                     direction="column"
