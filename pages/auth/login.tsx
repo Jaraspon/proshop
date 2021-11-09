@@ -133,7 +133,8 @@ const Login = () => {
 
             // router.push(`/`)
         }).catch(function (error: any) {
-            console.log(error);
+            console.log(error.response.data.status.message);
+            setAlert({ ...alert, open: true, mess: error.response.data.status.message });
             setLoading(false)
         });
     }

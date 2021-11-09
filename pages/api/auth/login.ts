@@ -103,7 +103,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         let __res = {
             status: {
                 success: false,
-                message: 'login error.'
+                message: 'Login error.'
             },
             timestamp: Math.floor(Date.now() / 1000)
         }
