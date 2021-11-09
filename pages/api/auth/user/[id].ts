@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 const jwt = require('jsonwebtoken');
 import { JWT } from 'server.config'
-import { middleware } from '@/src/middleware'
+// import { middleware } from '@/src/middleware'
 
 type Data = {
     status: {
@@ -41,14 +41,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 const get = (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const id = req.query.id || ''
     try {
-        let auth = middleware(req) // is user login
-        if (auth) {
-            console.log('pass');
+        // let auth = middleware(req) // is user login
+        // if (auth) {
+        //     console.log('pass');
             
-        } else {
-            console.log('fail');
+        // } else {
+        //     console.log('fail');
             
-        }
+        // }
         let __res = {
             status: {
                 success: true,
@@ -59,7 +59,7 @@ const get = (req: NextApiRequest, res: NextApiResponse<Data>) => {
                 firstName: 'Jesdakorn',
                 lastName: 'Saelor',
                 username: 'jesdakorn',
-                token: auth,
+                token: 'auth',
             },
             timestamp: Math.floor(Date.now() / 1000)
         }
