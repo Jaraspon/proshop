@@ -72,7 +72,7 @@ const Auth = (props: any) => {
     useEffect(() => {
         setLng(local.get('i18nextLng'))
         // (ls.get('i18nextLng') == 'th' && setDataMenuItem(jsonDataTh.menu_main))
-    }, [local.get('i18nextLng')])
+    }, [lng])
 
 
     return (
@@ -88,9 +88,9 @@ const Auth = (props: any) => {
                 >
                     <Box component="div" sx={{ maxWidth: 420 }}>
                         {routerPath ? (
-                            <LoginComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={500} />
+                            <LoginComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />
                         ) : (
-                            <RegisterComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={500} />
+                            <RegisterComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />
                         )}
 
                     </Box>
