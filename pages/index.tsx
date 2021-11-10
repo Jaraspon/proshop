@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 
 import Layout from '@/components/layout/manage';
+import AuthComponent from '@/components/auth/Auth';
 
 interface NewsFeedItemProps {
   auth: {
     user: object,
-    isAuth:boolean
+    isAuth: boolean
   }
 }
 
@@ -26,9 +27,7 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
   return (
     <>
       <Layout user={auth?.user} isAuth={auth?.isAuth}>
-{process.env.NEXT_PUBLIC_JWT_EXP}
-        
-
+        <AuthComponent />
       </Layout>
 
     </>

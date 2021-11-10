@@ -8,7 +8,7 @@ var local = require('local-storage');
 const axios = require('axios');
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
-import Logo from '@/components/Logo'
+import LoginComponent from '@/components/auth/Login'
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
     Container,
@@ -48,24 +48,14 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             // backgroundColor: `${theme.palette.primary.main}68`,
-            minHeight: 'calc(100vh) ',
+            // minHeight: 'calc(100vh) ',
             // minHeight: 'calc(100vh - 64px) ',
-            paddingTop: '10px',
-            paddingBottom: '30px',
-            justifyContent: 'center',
+            // paddingTop: '10px',
+            // paddingBottom: '30px',
+            // justifyContent: 'center',
             ['@media (max-width: 599px) ']: {
-                minHeight: 'calc(100vh) ',
+                // minHeight: 'calc(100vh) ',
                 // minHeight: 'calc(100vh - 56px) ',
-            },
-            '& .marked-register': {
-                color: `${theme.palette.primary.main} !important`,
-                fontWeight: 'bold',
-                fontSize: '1.2rem'
-            },
-            '& .input-hover div': {
-                '&:hover fieldset': {
-                    borderColor: `${theme.palette.primary.main}`
-                }
             },
         },
     }),
@@ -157,114 +147,21 @@ const Login = () => {
 
     return (
         <Layout user={{}} isAuth={false} showLayout={false}>
-          
-            <Container fixed>
+
+            <Container fixed className={classes.root}>
                 <Stack
                     direction="column"
-                    justifyContent="flex-start"
+                    justifyContent="center"
                     alignItems="center"
                     spacing={1}
-                    className={classes.root}
-
+                    sx={{ minHeight: '100vh' }}
                 >
-
-
                     <Box component="div" sx={{ maxWidth: 420 }}>
-                        <form onSubmit={submitLogin} className="user-select">
-                            <Stack
-                                sx={{ mb: 3 }}
-                                direction="column"
-                                justifyContent="flex-start"
-                                alignItems="center"
-                                spacing={1}
-                            >
-
-                                <Logo />
-                               
-
-                            </Stack>
-                            <Stack
-                                sx={{ mb: 3 }}
-                                direction={{ xs: 'column', sm: 'row' }}
-                                justifyContent="flex-start"
-                                alignItems="center"
-                                spacing={1}
-                            >
-                                <p>Do you have an account? </p><Link to="/auth/register" style="marked-register">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></Link>
-                            </Stack>
-
-                            <TextField
-                                id="username"
-                                className="input-hover input-bg"
-                                sx={{ mb: 2 }}
-                                type="text"
-                                fullWidth
-                                placeholder="Username or Email"
-                                name="username"
-                                inputProps={{
-                                    'data-key': 'username'
-                                }}
-                                onChange={changeInput}
-                            />
-                            <FormControl fullWidth sx={{ mb: 4 }} className="input-hover input-bg">
-                                {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
-                                <OutlinedInput
-
-                                    id="outlined-adornment-password"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    name="password"
-                                    inputProps={{
-                                        'data-key': 'password'
-                                    }}
-                                    onChange={changeInput}
-                                    endAdornment={
-                                        <InputAdornment position="end"  >
-                                            <IconButton
-                                                color="primary"
-                                                aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                                sx={{ mr: 0.1 }}
-                                            >
-                                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-
-                                    placeholder="Password"
-                                />
-                            </FormControl>
-                            <LoadingButton
-                                className="btn-main"
-                                disabled={dataForm.disabled}
-                                type="submit"
-                                variant="contained"
-                                size="large"
-                                disableElevation
-                                fullWidth
-                                loading={loading}
-                            >
-                                Login
-                            </LoadingButton>
-                       
-                        </form>
+                        <LoginComponent />
                     </Box>
                 </Stack>
             </Container>
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={open}
-                message="I love snacks"
-                key={vertical + horizontal}
-                TransitionComponent={transition}
-            >
-                <Alert severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                    {alert.mess}
-                </Alert>
 
-            </Snackbar>
 
         </Layout >
     )
