@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         },
         language: {
-            position: 'fixed',
+            position: 'absolute',
             right: 0,
             top: 0,
             padding: '20px',
