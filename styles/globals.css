@@ -153,29 +153,6 @@ main {}
     }
 }
 
-
-/* .app-bar {
-    background-color: #fff !important;
-    box-shadow: none !important;
-    border-bottom: 1px solid rgb(228, 228, 228) !important;
-    color: #616060 !important;
-    max-height: 64px !important;
-    user-select: none !important;
-}
-
-.btn-app-bar {
-    border: 1px solid #e5e8ec;
-    border-radius: 9px;
-    color: #7a7a7a;
-    min-width: 39px;
-    min-height: 39px;
-    background: #fff;
-}
-
-.btn-app-bar>svg {
-    font-size: 1.3rem;
-} */
-
-.user-select {
+.select-none {
     user-select: none;
 }

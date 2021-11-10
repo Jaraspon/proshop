@@ -135,7 +135,7 @@ const Login = (props: any) => {
     return (
         <>
             <Fade in={!loadingFade} timeout={loadingFadeTime} >
-                <form onSubmit={submitLogin} className={`${classes.root} user-select`}>
+                <form onSubmit={submitLogin} className={`${classes.root} select-none`}>
                     <Stack
                         sx={{ mb: 3 }}
                         direction="column"

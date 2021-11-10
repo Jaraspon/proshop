@@ -114,7 +114,7 @@ const Register = (props: any) => {
     return (
         <>
             <Fade in={!loadingFade} timeout={loadingFadeTime} >
-                <form onSubmit={submitRegister} className={`${classes.root} user-select`}>
+                <form onSubmit={submitRegister} className={`${classes.root} select-none`}>
                     <Stack
                         sx={{ mb: 3, pl: 1 }}
                         direction={{ xs: 'column', sm: 'row' }}

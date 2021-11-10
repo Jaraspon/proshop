@@ -7,7 +7,7 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import theme from "@/src/theme";
-
+import "@/src/i18n/index";
 
 function MyApp({ Component, pageProps }: AppProps) {
 
