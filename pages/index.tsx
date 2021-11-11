@@ -8,13 +8,13 @@ import { Button, Stack } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 
-// import Layout from '@/components/layout/manage';
-// import AuthComponent from '@/components/auth/Auth';
+import Layout from '@/components/layout/manage';
+import AuthComponent from '@/components/auth/Auth';
 import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
 
-const Layout = dynamic(() => import('@/components/layout/index'))
-const AuthComponent = dynamic(() => import('@/components/auth/Auth'))
+// const Layout = dynamic(() => import('@/components/layout/index'))
+// const AuthComponent = dynamic(() => import('@/components/auth/Auth'))
 
 interface NewsFeedItemProps {
   auth: {
