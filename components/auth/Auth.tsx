@@ -9,11 +9,13 @@ var local = require('local-storage');
 const axios = require('axios');
 import { useTranslation, Trans } from "react-i18next";
 
-import Layout from '@/components/layout/index';
+// import Layout from '@/components/layout/index';
 import LoginComponent from '@/components/auth/Login'
 import RegisterComponent from '@/components/auth/Register'
 import LoadingComponent from '@/components/Loading'
+import dynamic from 'next/dynamic'
 
+const Layout = dynamic(() => import('@/components/layout/index'))
 
 import { createStyles, makeStyles } from '@mui/styles';
 import {
@@ -77,7 +79,7 @@ const Auth = (props: any) => {
 
 
     return (
-        <Layout user={{}} isAuth={false} showLayout={false}>
+        <>
             <LoadingComponent loading={checked} />
             <Container fixed className={classes.root}>
                 <Stack
@@ -98,7 +100,7 @@ const Auth = (props: any) => {
                 </Stack>
             </Container>
             <div className={`${classes.language} select-none `}><a className={lng == 'th' ? "action" : ""} onClick={() => changeLanguage('th')}> TH </a><Box component="span" sx={{ px: 1 }}>| </Box> <a className={lng == 'en' ? "action" : ""} onClick={() => changeLanguage('en')}> EN</a></div>
-        </Layout >
+        </ >
     )
 }
 
