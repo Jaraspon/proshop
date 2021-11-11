@@ -69,7 +69,9 @@ const Auth = (props: any) => {
     };
 
     useEffect(() => {
-        setLng(local.get('i18nextLng'))
+        if (local.get('i18nextLng')) {
+            setLng(local.get('i18nextLng'))
+        }
         // (ls.get('i18nextLng') == 'th' && setDataMenuItem(jsonDataTh.menu_main))
     }, [lng])
 
