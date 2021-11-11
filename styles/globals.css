@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
 html,
 body {
     color: #4e4e4e !important;
@@ -155,4 +157,33 @@ main {}
 
 .select-none {
     user-select: none;
+}
+
+.logo {
+    width: 0%;
+    position: relative;
+    animation: example 3s ease-in-out 0s;
+}
+
+@keyframes example {
+    0% {
+        width: 0%;
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+    30% {
+        width: 135px;
+        opacity: 1;
+        transform: rotate(360deg)
+    }
+    70% {
+        width: 135px;
+        opacity: 1;
+        transform: rotate(360deg)
+    }
+    100% {
+        width: 0%;
+        opacity: 0;
+        transform: rotate(0deg);
+    }
 }

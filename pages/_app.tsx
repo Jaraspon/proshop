@@ -14,10 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Proshop</title>
+        <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
         <meta name="description" content="Welcome to Proshop" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Logo-web.png" />
         <script src="/assets/fontawesome/original/solid.js"></script>
         <script src="/assets/fontawesome/original/regular.js"></script>
         <script src="/assets/fontawesome/original/light.js"></script>

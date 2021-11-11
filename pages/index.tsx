@@ -10,6 +10,7 @@ import { useRouter } from 'next/dist/client/router';
 
 import Layout from '@/components/layout/manage';
 import AuthComponent from '@/components/auth/Auth';
+import LoadingOneComponent from '@/components/LoadingOne';
 
 interface NewsFeedItemProps {
   auth: {
@@ -24,11 +25,21 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const router = useRouter();
 
   const [user, setUser] = useState([])
+  const [loadingOne, setLoadingnOne] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingnOne(false)
+    }, 2700);
+  }, [])
   return (
     <>
-      <Layout user={auth?.user} isAuth={auth?.isAuth}>
-        <AuthComponent />
-      </Layout>
+      <LoadingOneComponent loading={loadingOne} />
+      {(!loadingOne) &&
+        <Layout user={auth?.user} isAuth={auth?.isAuth}>
+          <AuthComponent />
+        </Layout>
+      }
 
     </>
   )
