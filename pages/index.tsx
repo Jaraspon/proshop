@@ -8,7 +8,7 @@ import { Button, Stack } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 
-import Layout from '@/components/layout/manage';
+import Layout from '@/components/layout/index';
 import AuthComponent from '@/components/auth/Auth';
 import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
