@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Niconne&display=swap");
 html,
 body {
     color: #4e4e4e !important;
@@ -159,6 +159,14 @@ main {}
     user-select: none;
 }
 
+a {
+    cursor: pointer;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .logo {
     width: 0%;
     position: relative;
@@ -174,12 +182,12 @@ main {}
     30% {
         width: 135px;
         opacity: 1;
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
     70% {
         width: 135px;
         opacity: 1;
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
     100% {
         width: 0%;

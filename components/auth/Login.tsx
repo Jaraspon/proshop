@@ -7,6 +7,7 @@ const axios = require('axios');
 import Link from '@/components/Link'
 import Logo from '@/components/Logo'
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useTranslation, Trans } from "react-i18next";
 import {
     Container,
     FormControl,
@@ -61,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Login = (props: any) => {
     const { clickLink, loadingFade, loadingFadeTime } = props
     const classes = useStyles();
+    const { t, i18n } = useTranslation()
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [alert, setAlert] = useState({
         open: false,
@@ -156,7 +158,7 @@ const Login = (props: any) => {
                         spacing={1}
                     >
                         {/* <p>Do you have an account? </p><Link to="/auth/register" style="marked-register">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></Link> */}
-                        <p>Do you have an account? </p><a onClick={() => clickLink(false)} className="marked-link">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></a>
+                        <p>{t('text_content_login')} </p><a onClick={() => clickLink(false)} className="marked-link">{t('text_content_login_link')} <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></a>
                     </Stack>
 
                     <TextField
@@ -164,7 +166,7 @@ const Login = (props: any) => {
                         sx={{ mb: 2 }}
                         type="text"
                         fullWidth
-                        placeholder="Username or Email"
+                        placeholder={t("input_username_or_email")}
                         name="username"
                         inputProps={{
                             'data-key': 'username'
@@ -195,7 +197,7 @@ const Login = (props: any) => {
                                 </InputAdornment>
                             }
 
-                            placeholder="Password"
+                            placeholder={t("input_password")}
                         />
                     </FormControl>
                     <LoadingButton
@@ -208,7 +210,7 @@ const Login = (props: any) => {
                         fullWidth
                         loading={loadingLogin}
                     >
-                        Login
+                        {t("btn_login")}
                     </LoadingButton>
                 </form>
             </Fade>

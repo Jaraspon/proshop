@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Layout from '@/components/layout/index';
 import Link from '@/components/Link'
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useTranslation, Trans } from "react-i18next";
 import {
     Container,
     FormControl,
@@ -59,6 +60,7 @@ const Register = (props: any) => {
     const { clickLink, loadingFade, loadingFadeTime } = props
     const classes = useStyles();
     const [loadingRegister, setLoadingRegister] = useState(false);
+    const { t, i18n } = useTranslation()
     const [alert, setAlert] = useState({
         open: false,
         vertical: 'top',
@@ -123,7 +125,7 @@ const Register = (props: any) => {
                         spacing={1}
                     >
                         {/* <p>Already have an account? </p><Link to="/auth/login" style="marked-register">Sign in for PROSHOP</Link> */}
-                        <p>Already have an account? </p><a onClick={() => clickLink(true)} className="marked-link">Sign in for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></a>
+                        <p>{t("text_content_register")} </p><a onClick={() => clickLink(true)} className="marked-link">{t("text_content_register_link")} <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></a>
                     </Stack>
                     <TextField
                         className="input-hover input-bg"
@@ -131,7 +133,7 @@ const Register = (props: any) => {
                         type="text"
                         fullWidth
                         label=""
-                        placeholder="Username"
+                        placeholder={t("input_username")}
                         name="username"
                         inputProps={{
                             'data-key': 'username'
@@ -159,7 +161,7 @@ const Register = (props: any) => {
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            placeholder="Password"
+                            placeholder={t("input_password")}
                         />
                     </FormControl>
 
@@ -169,7 +171,7 @@ const Register = (props: any) => {
                         type="email"
                         fullWidth
                         label=""
-                        placeholder="Email"
+                        placeholder={t("input_email")}
                         name="email"
                         inputProps={{
                             'data-key': 'email'
@@ -185,7 +187,7 @@ const Register = (props: any) => {
                             label=""
                             fullWidth
                             sx={{ mb: 2, mr: 1 }}
-                            placeholder="First Name"
+                            placeholder={t("input_firstname")}
                             name="firstname"
                             inputProps={{
                                 'data-key': 'firstname'
@@ -197,7 +199,7 @@ const Register = (props: any) => {
                             label=""
                             fullWidth
                             sx={{ mb: 2 }}
-                            placeholder="Last Name"
+                            placeholder={t("input_lastname")}
                             name="lastname"
                             inputProps={{
                                 'data-key': 'lastname'
@@ -206,7 +208,7 @@ const Register = (props: any) => {
                         />
                     </Box>
                     <FormControl component="fieldset" sx={{ mb: 2, pl: 1 }}>
-                        <FormLabel component="legend">Gender</FormLabel>
+                        <FormLabel component="legend">{t("gender")}</FormLabel>
                         <RadioGroup row aria-label="gender"
                             name="gender"
                             onChange={changeInput}
@@ -215,14 +217,15 @@ const Register = (props: any) => {
                                 sx={{ mr: 5 }}
                                 value="1"
                                 control={<Radio />}
-                                label="Female"
-
+                                label={t("male")}
 
                             />
                             <FormControlLabel
+
                                 value="2"
                                 control={<Radio />}
-                                label="Male"
+                                label={t("female")}
+
 
                             />
 
@@ -238,7 +241,7 @@ const Register = (props: any) => {
                         fullWidth
                         loading={loadingRegister}
                     >
-                        Register
+                        {t("btn_register")}
                     </LoadingButton>
                 </form>
             </Fade>

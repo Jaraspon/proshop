@@ -1,12 +1,18 @@
 {
-    "language": "Language",
-    "thai": "Thai",
-    "eng": "English",
-    "setting": "Setting",
-    "resume": "Resume",
-    "language_code": "LANGUAGE",
-    "education": "EDUCATION",
-    "experience": "RELEVANT EXPERIENCE",
-    "contact": "Contact US",
-    "manage_data": "Manage Data"
+    "text_content_login": "Do you have an account?",
+    "text_content_login_link": "Sign up for",
+    "btn_login": "Login",
+    "input_username_or_email": "Username or Email",
+    "input_password": "Password",
+    "text_content_register": "Already have an account?",
+    "text_content_register_link": "Sign in for",
+    "btn_register": "Register",
+    "input_username": "Username",
+    "input_email": "Email",
+    "input_firstname": "First Name",
+    "input_lastname": "Last Name",
+    "gender": "Gender",
+    "female": "Female",
+    "male": "Male"
+
 }

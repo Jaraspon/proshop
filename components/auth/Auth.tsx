@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
             right: 0,
             top: 0,
             padding: '20px',
-            cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             '& .action': {
@@ -96,7 +95,7 @@ const Auth = (props: any) => {
                     </Box>
                 </Stack>
             </Container>
-            <div className={`${classes.language} select-none `}><span className={lng == 'th' ? "action" : ""} onClick={() => changeLanguage('th')}> TH </span><Box component="span" sx={{ px: 1 }}>| </Box> <span className={lng == 'en' ? "action" : ""} onClick={() => changeLanguage('en')}> EN</span></div>
+            <div className={`${classes.language} select-none `}><a className={lng == 'th' ? "action" : ""} onClick={() => changeLanguage('th')}> TH </a><Box component="span" sx={{ px: 1 }}>| </Box> <a className={lng == 'en' ? "action" : ""} onClick={() => changeLanguage('en')}> EN</a></div>
         </Layout >
     )
 }
