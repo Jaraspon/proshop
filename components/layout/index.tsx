@@ -9,7 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { alpha, Button, Drawer, Fade, IconButton, InputBase, Menu, MenuItem, styled, Divider, Tooltip } from '@mui/material';
+import { alpha, Button, Drawer, Fade, IconButton, InputBase, Menu, MenuItem, styled, Divider, Tooltip, Paper } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -26,6 +26,14 @@ import { useRouter } from 'next/router';
 import { useTranslation, Trans } from "react-i18next";
 
 import { logoutStore } from '@/store/actions';
+import Cookies from 'js-cookie'
+
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
 
 interface NewsFeedItemProps {
     user: object,
@@ -150,7 +158,10 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
 
         setState({ ...state, [anchor]: open });
     };
-
+    const changeLanguage = (lng: any) => {
+        i18n.changeLanguage(lng);
+        setAnchorEl(null);
+    };
     const logout = () => {
 
         setIsAuthLogin(false)
@@ -163,7 +174,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
     }, [isAuth])
     useEffect(() => {
         console.log(counter);
-        if (counter.auth) {
+        if (Cookies.get("pethouse_auth") && counter.auth) {
             setIsAuthLogin(counter.auth)
             setGoLogin(!counter.auth)
         }
@@ -191,11 +202,11 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
         <>
             <CssBaseline />
             {showLayout && (<>
-                <StyledAppBar position="fixed" >
+                <StyledAppBar position="fixed" sx={{ display: { xs: 'none', md: 'block' }, borderRadius: '0 0 10px 10px' }}>
                     <Toolbar>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
 
-                            <a onClick={async () => {  router.push('/');  setGoLogin(false); }}>{process.env.NEXT_PUBLIC_APP_NAME}</a>
+                            <a onClick={async () => { router.push('/'); setGoLogin(false); }}>{process.env.NEXT_PUBLIC_APP_NAME}</a>
                         </Typography>
 
                         <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
@@ -219,8 +230,8 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                                 open={openMenu}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}>English</MenuItem>
-                                <MenuItem onClick={handleClose}>Thai</MenuItem>
+                                <MenuItem onClick={() => changeLanguage("en")}>English</MenuItem>
+                                <MenuItem onClick={() => changeLanguage("th")}>Thai</MenuItem>
                                 <Divider />
                                 <MenuItem onClick={handleClose}>Help to translate</MenuItem>
                             </Menu>
@@ -232,7 +243,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                                         variant="outlined"
                                         onClick={() => logout()}
                                     >
-                                        Logout
+                                        {t("btn_logout")}
                                     </Button>
                                 </Tooltip>
                             ) : (
@@ -256,14 +267,24 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                     >
                         {drawer}
                     </Drawer>
-                </Box><Toolbar />
+                </Box>
+                <Toolbar sx={{ display: { xs: 'none', md: 'block' } }} />
+                <Paper sx={{ display: { xs: 'block', md: 'none' }, position: 'fixed', bottom: 0, left: 0, right: 0, borderRadius: '10px 10px 0px 0px' }} elevation={3}>
+                    <BottomNavigation
+                        showLabels
+                        sx={{ borderRadius: '10px 10px 0px 0px' }}
+                    >
+                        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+                        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+                        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+                    </BottomNavigation>
+                </Paper>
             </>)
             }
 
-            {/* {isAuthLogin || !goLogin ? (<main>{children}</main>) : (<AuthComponent />)} */}
 
 
-            {(!goLogin) && <main>{children}</main>}
+            {(!goLogin) && <main><Box sx={{ mt: 1 }}>{children} </Box></main>}
 
             {(goLogin) && <AuthComponent />}
 

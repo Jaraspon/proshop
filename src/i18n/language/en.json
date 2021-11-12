@@ -13,6 +13,7 @@
     "input_lastname": "Last Name",
     "gender": "Gender",
     "female": "Female",
-    "male": "Male"
+    "male": "Male",
+    "btn_logout": "Logout"
 
 }

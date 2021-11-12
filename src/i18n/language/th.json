@@ -13,5 +13,6 @@
     "input_lastname": "นามสกุล",
     "gender": "เพศ",
     "female": "หญิง",
-    "male": "ชาย"
+    "male": "ชาย",
+    "btn_logout": "ออกจากระบบ"
 }

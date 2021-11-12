@@ -101,7 +101,7 @@ const Auth = (props: any) => {
                     </Box>
                 </Stack>
             </Container>
-            <div className={`${classes.language} select-none `}><a className={lng == 'th' ? "action" : ""} onClick={() => changeLanguage('th')}> TH </a><Box component="span" sx={{ px: 1 }}>| </Box> <a className={lng == 'en' ? "action" : ""} onClick={() => changeLanguage('en')}> EN</a></div>
+            {/* <div className={`${classes.language} select-none `}><a className={lng == 'th' ? "action" : ""} onClick={() => changeLanguage('th')}> TH </a><Box component="span" sx={{ px: 1 }}>| </Box> <a className={lng == 'en' ? "action" : ""} onClick={() => changeLanguage('en')}> EN</a></div> */}
         </ >
     )
 }
