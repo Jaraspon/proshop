@@ -10,13 +10,13 @@ const axios = require('axios');
 import { useTranslation, Trans } from "react-i18next";
 
 // import Layout from '@/components/layout/index';
-// import LoginComponent from '@/components/auth/Login'
-// import RegisterComponent from '@/components/auth/Register'
+import LoginComponent from '@/components/auth/Login'
+import RegisterComponent from '@/components/auth/Register'
 // import LoadingComponent from '@/components/Loading'
 import dynamic from 'next/dynamic'
 
-const LoginComponent = dynamic(() => import('@/components/auth/Login'))
-const RegisterComponent = dynamic(() => import('@/components/auth/Register'))
+// const LoginComponent = dynamic(() => import('@/components/auth/Login'))
+// const RegisterComponent = dynamic(() => import('@/components/auth/Register'))
 const LoadingComponent = dynamic(() => import('@/components/Loading'))
 
 import { createStyles, makeStyles } from '@mui/styles';

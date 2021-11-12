@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import { makeStyles } from '@mui/styles';
 
@@ -19,9 +19,13 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import MenuIcon from '@mui/icons-material/Menu';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import SearchIcon from '@mui/icons-material/Search';
-
+import { useDispatch, useSelector } from 'react-redux';
 import Link from '@/components/Link'
+import AuthComponent from '@/components/auth/Auth';
 import { useRouter } from 'next/router';
+import { useTranslation, Trans } from "react-i18next";
+
+import { logoutStore } from '@/store/actions';
 
 interface NewsFeedItemProps {
     user: object,
@@ -118,8 +122,14 @@ const useStyles = makeStyles((theme: any) => ({
 
 const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayout = true }) => {
     const router = useRouter();
+    const counter = useSelector((state: any) => state.reducer)
+    const dispatch = useDispatch()
+    const { t, i18n } = useTranslation()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl);
+    const [goLogin, setGoLogin] = useState(false)
+    const [isAuthLogin, setIsAuthLogin] = useState(isAuth)
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -140,6 +150,24 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
 
         setState({ ...state, [anchor]: open });
     };
+
+    const logout = () => {
+
+        setIsAuthLogin(false)
+        dispatch(logoutStore())
+    }
+
+    useEffect(() => {
+        console.log("L_auth", isAuth);
+
+    }, [isAuth])
+    useEffect(() => {
+        console.log(counter);
+        if (counter.auth) {
+            setIsAuthLogin(counter.auth)
+            setGoLogin(!counter.auth)
+        }
+    }, [counter])
     const drawer = (
         <div>
             <List component="nav" aria-label="main mailbox folders">
@@ -165,28 +193,11 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
             {showLayout && (<>
                 <StyledAppBar position="fixed" >
                     <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
 
-                            <Link to="/" style="">PROSHOP</Link>
+                            <a onClick={async () => {  router.push('/');  setGoLogin(false); }}>{process.env.NEXT_PUBLIC_APP_NAME}</a>
                         </Typography>
-                        <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, mr: 1.5 }}>
-                            <Search>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </Search>
-                        </Box>
-                        <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
-                            <Tooltip title="Shopping cart">
-                                <StyledBtnIcon>
-                                    <LocalGroceryStoreIcon />
-                                </StyledBtnIcon>
-                            </Tooltip>
-                        </Box>
+
                         <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                             <Tooltip title="Change language">
                                 <StyledBtnIcon
@@ -209,24 +220,32 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                                 onClose={handleClose}
                             >
                                 <MenuItem onClick={handleClose}>English</MenuItem>
-                                <MenuItem onClick={handleClose}>中文</MenuItem>
                                 <MenuItem onClick={handleClose}>Thai</MenuItem>
                                 <Divider />
                                 <MenuItem onClick={handleClose}>Help to translate</MenuItem>
                             </Menu>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-                            <Tooltip title="Login">
+                            {isAuthLogin ? (
+                                <Tooltip title="Login">
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() => logout()}
+                                    >
+                                        Logout
+                                    </Button>
+                                </Tooltip>
+                            ) : (
+                                <Tooltip title="Login">
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() => setGoLogin(true)}
+                                    >
+                                        {t("btn_login")}
+                                    </Button>
+                                </Tooltip>
+                            )}
 
-                                <Button
-                                    variant="outlined"
-                                    onClick={() => router.push(`/auth/login`)}
-                                >
-                                    Login
-                                </Button>
-
-
-                            </Tooltip>
                         </Box>
                     </Toolbar>
 
@@ -241,10 +260,12 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
             </>)
             }
 
+            {/* {isAuthLogin || !goLogin ? (<main>{children}</main>) : (<AuthComponent />)} */}
 
 
-            <main>{children}</main>
+            {(!goLogin) && <main>{children}</main>}
 
+            {(goLogin) && <AuthComponent />}
 
 
         </>

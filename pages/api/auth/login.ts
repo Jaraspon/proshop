@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 const jwt = require('jsonwebtoken');
-import { JWT } from 'server.config'
+// import { JWT } from 'server.config'
 const { Validator } = require('node-input-validator');
 const db = require('@/database/db');
 const bcrypt = require('bcrypt');

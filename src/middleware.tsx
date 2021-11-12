@@ -1,11 +1,69 @@
 import React from 'react'
+var local = require('local-storage');
+// const axios = require('axios');
+import axios from '@axios'
+import * as cookie from 'cookie';
+import Cookies from 'js-cookie'
 
-export default function middleware() {
-    return (
-        <div>
-            
-        </div>
-    )
+export async function getMiddleware(key: any) {
+    // console.log("sssssssss",local.get("pethouse_auth"));
+
+    let cookieKey = cookie.parse(key)
+    let token = null
+    let isAuth = false
+    let user = {}
+
+    await axios.get("/api/auth/user", {
+        headers: {
+            'Authorization': `bearer ${cookieKey['pethouse_auth']}`
+        }
+    }).then((res: any) => {
+        if (res.data.status.success) {
+            token = cookieKey['pethouse_auth']
+            isAuth = true
+            user = res.data.user
+        } else {
+            token = null
+            isAuth = false
+            user = {}
+        }
+    }).catch((err: any) => {
+        console.log('error')
+        token = null
+        isAuth = false
+        user = {}
+        // Cookies.remove('pethouse_auth')
+    })
+
+    // await axios.get("/api/auth/user", {
+    //     headers: {
+    //         'Authorization': `bearer ${cookieKey["pethouse_auth"]}`
+    //     }
+    // }).then((res: any) => {
+    //     // console.log(res);
+    //     token = cookieKey["pethouse_auth"]
+    //     // if (res.data.status.success) {
+    //     //     token = res
+    //         isAuth = true
+    //     //     user = res.data.user
+    //     // } else {
+    //     //     token = res
+    //     //     isAuth = false
+    //     //     user = {}
+
+    //     // }
+
+    // }).catch((err: any) => {
+    //     console.log(err);
+
+    //     // console.log('error')
+    //     token = cookieKey["pethouse_auth"]
+    //     isAuth = false
+    //     user = {}
+    //     // Cookies.remove('k_user')
+    // })
+    // let item = { token, isAuth, user };
+    return { token, isAuth, user }
 }
 // import Cookies from 'js-cookie'
 // import { useEffect, useState } from 'react'

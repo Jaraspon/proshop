@@ -11,7 +11,7 @@ const axios = require('axios');
 
 import Layout from '@/components/layout/index';
 import AuthComponent from '@/components/auth/Auth';
-import ContentMainComponent from '@/components/ContentMain';
+import ContentPetComponent from '@/components/ContentPet';
 // import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
 
@@ -37,26 +37,20 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const [user, setUser] = useState([])
   const [loadingOne, setLoadingnOne] = useState(true)
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoadingnOne(false)
-    }, 2700);
-
-  }, [])
-
+ 
   useEffect(() => {
 
     console.log('auth', auth);
   }, [auth])
   return (
     <>
-      <LoadingOneComponent loading={loadingOne} />
-      {(!loadingOne) &&
+      {/* <LoadingOneComponent loading={loadingOne} /> */}
+      {/* {(!loadingOne) && */}
         <Layout user={auth?.user} isAuth={auth?.isAuth} showLayout={true}>
-          <ContentMainComponent />
+          {/* <ContentPetComponent /> */}
           {/* <AuthComponent /> */}
         </Layout>
-      }
+      {/* } */}
 
     </>
   )

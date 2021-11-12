@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useRouter } from 'next/router';
-
+import { useDispatch, useSelector } from 'react-redux'
 const local = require('local-storage');
 const axios = require('axios');
 import Link from '@/components/Link'
@@ -33,7 +33,8 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
-
+import { loginStore } from '@/store/actions';
+import Cookies from 'js-cookie'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,7 +62,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Login = (props: any) => {
     const { clickLink, loadingFade, loadingFadeTime } = props
+    const counter = useSelector((state: any) => state.reducer)
     const classes = useStyles();
+    const dispatch = useDispatch()
     const { t, i18n } = useTranslation()
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [alert, setAlert] = useState({
@@ -94,11 +97,13 @@ const Login = (props: any) => {
             if (_res?.status?.success) {
                 setAlert({ ...alert, open: false, mess: _res?.status?.message });
                 local.set('pethouse_auth', _res.user.token);
+                Cookies.set('pethouse_auth', _res.user.token);
+              
             } else {
                 console.log('w');
 
                 setAlert({ ...alert, open: true, mess: _res?.status?.message });
-            }
+            }  dispatch(loginStore())
             // setTransition(() => TransitionLeft);
             setLoadingLogin(false)
 
@@ -107,6 +112,7 @@ const Login = (props: any) => {
             console.log(error.response.data.status.message);
             setAlert({ ...alert, open: true, mess: error.response.data.status.message });
             setLoadingLogin(false)
+            dispatch(loginStore())
         });
     }
 
@@ -125,7 +131,10 @@ const Login = (props: any) => {
 
         setAlert({ ...alert, ['open']: false });
     };
-
+    useEffect(() => {
+        console.log(counter);
+        
+    }, [counter])
     useEffect(() => {
         if (dataForm.username != '' && dataForm.password != '' && dataForm.password.length >= 6) {
             setDataForm({ ...dataForm, disabled: false })

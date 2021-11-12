@@ -7,6 +7,7 @@
       "@/store/*": ["store/*"],
       "@/database/*": ["database/*"],
       "@/styles/*": ["styles/*"],
+      "@axios": ["src/config/axios"],
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

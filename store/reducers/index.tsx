@@ -1,20 +1,23 @@
 const initialState = {
   product: {},
   products: [],
+  auth: false
 
 };
 
-export const reducer = (state = initialState, action: { type: string; payload: any; }) => {
+export const reducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case "GET_PRODUCT":
+    case "LOGIN":
+      console.log('l', action.payload);
+
       return {
         ...state,
-        product: action.payload,
+        auth: action.payload,
       };
-    case "GET_PRODUCTS":
+    case "LOGOUT":
       return {
         ...state,
-        product: action.payload,
+        auth: action.payload,
       };
     default:
       return { ...state };
