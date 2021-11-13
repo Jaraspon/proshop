@@ -138,8 +138,16 @@ const useStyles = makeStyles((theme: any) => ({
             width: '1em',
             height: '1em',
             flexShrink: 0
+        },
+        '& .btn':{
+            color: `${theme.palette.primary.main}`
         }
     },
+    appBar: {
+        '& .title-web': {
+            color: `${theme.palette.primary.main}`
+        }
+    }
 
 }));
 
@@ -219,11 +227,11 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
         <>
             <CssBaseline />
             {showLayout && (<>
-                <StyledAppBar position="fixed" sx={{ display: { xs: 'none', md: 'block' }, borderRadius: '0 0 10px 10px' }}>
+                <StyledAppBar position="fixed" sx={{ display: { xs: 'none', md: 'block' }, borderRadius: '0 0 10px 10px' }} className={classes.appBar}>
                     <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ width: '150px' }} >
+                        <Typography variant="h6" component="div" sx={{ width: '150px' }} className="title-web cursor-pointer" onClick={async () => { router.push('/'); setGoLogin(false); }}>
 
-                            <a onClick={async () => { router.push('/'); setGoLogin(false); }}>{process.env.NEXT_PUBLIC_APP_NAME}</a>
+                            {process.env.NEXT_PUBLIC_APP_NAME}
                         </Typography>
                         <div className={classes.menuBotton}>
                             <BottomNavigation
@@ -231,10 +239,10 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                                 showLabels
                                 sx={{ borderRadius: '10px 10px 0px 0px', width: '50vw' }}
                             >
-                                <BottomNavigationAction label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                                <BottomNavigationAction label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                                <BottomNavigationAction label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                                <BottomNavigationAction label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction className="btn" label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction className="btn" label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction className="btn" label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction className="btn" label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
                             </BottomNavigation>
                         </div>
                         <Box sx={{ display: 'flex', width: '150px' }}>
@@ -307,10 +315,10 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                         showLabels
                         sx={{ borderRadius: '10px 10px 0px 0px', height: '65px', p: 1 }}
                     >
-                        <BottomNavigationAction label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                        <BottomNavigationAction label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                        <BottomNavigationAction label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                        <BottomNavigationAction label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction className="btn" label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction className="btn" label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction className="btn" label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction className="btn" label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
                     </BottomNavigation>
                 </Paper>
             </>)
