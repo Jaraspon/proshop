@@ -11,7 +11,7 @@ const axios = require('axios');
 
 import Layout from '@/components/layout/index';
 import AuthComponent from '@/components/auth/Auth';
-import ContentPetComponent from '@/components/ContentPet';
+import ContentMainComponent from '@/components/ContentMain';
 // import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
 
@@ -29,7 +29,7 @@ interface NewsFeedItemProps {
   }
 }
 
-const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
+const Pet: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const counter = useSelector((state: any) => state.reducer)
   const dispatch = useDispatch()
   const router = useRouter();
@@ -37,17 +37,23 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const [user, setUser] = useState([])
   const [loadingOne, setLoadingnOne] = useState(true)
 
- 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingnOne(false)
+    }, 2700);
+
+  }, [])
+
   useEffect(() => {
 
     console.log('auth', auth);
   }, [auth])
   return (
     <>
-      {/* <LoadingOneComponent loading={loadingOne} /> */}
-      {/* {(!loadingOne) && */}
+      {/* <LoadingOneComponent loading={loadingOne} />
+      {(!loadingOne) && */}
         <Layout user={auth?.user} isAuth={auth?.isAuth} showLayout={true}>
-          {/* <ContentPetComponent /> */}
+          <ContentMainComponent />
           {/* <AuthComponent /> */}
         </Layout>
       {/* } */}
@@ -76,4 +82,4 @@ export async function getServerSideProps(context: any) {
 }
 
 
-export default Home
+export default Pet

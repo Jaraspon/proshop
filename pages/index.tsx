@@ -20,7 +20,7 @@ import dynamic from 'next/dynamic'
 const LoadingOneComponent = dynamic(() => import('@/components/LoadingOne'))
 
 import { getMiddleware } from '@/src/middleware'
-
+import useSessionStorage from 'react-use-sessionstorage';
 
 interface NewsFeedItemProps {
   auth: {
@@ -33,27 +33,41 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const counter = useSelector((state: any) => state.reducer)
   const dispatch = useDispatch()
   const router = useRouter();
-
+  // const [item, setItem] = useSessionStorage('l_o', '0');
   const [user, setUser] = useState([])
   const [loadingOne, setLoadingnOne] = useState(true)
 
+  const [onePa, setOnePa] = useState(true)
   useEffect(() => {
-    setTimeout(() => {
-      setLoadingnOne(false)
-    }, 2700);
+    (async () => {
+      await setOnePa(false)
 
-  }, [])
+      if (sessionStorage.getItem('l_o') == "1") {
+        setLoadingnOne(false)
+      } else {
+        setTimeout(() => {
+          setLoadingnOne(false)
 
-  useEffect(() => {
+        }, 2700);
+        await sessionStorage.setItem('l_o', "1");
+      }
 
-    console.log('auth', auth);
-  }, [auth])
+    })();
+
+  }, [loadingOne])
+
+
+
+  if (onePa) {
+    return <></>
+  }
   return (
     <>
       <LoadingOneComponent loading={loadingOne} />
       {(!loadingOne) &&
         <Layout user={auth?.user} isAuth={auth?.isAuth} showLayout={true}>
-          <ContentMainComponent />
+          Home
+          {/* <ContentMainComponent /> */}
           {/* <AuthComponent /> */}
         </Layout>
       }
