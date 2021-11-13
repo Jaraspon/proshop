@@ -34,6 +34,12 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
+import PetsIcon from '@mui/icons-material/Pets';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { ImHome } from 'react-icons/im';
+import { MdPets } from 'react-icons/md';
+import { IoIosChatbubbles } from 'react-icons/io';
 
 interface NewsFeedItemProps {
     user: object,
@@ -94,6 +100,11 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
     color: '#616060',
     maxHeight: '64px',
     userSelect: 'none',
+
+    '& .MuiToolbar-root': {
+        display: 'flex',
+        justifyContent: 'space-between',
+    }
 }));
 
 const StyledBtnIcon = styled(Button)(({ theme }) => ({
@@ -121,14 +132,20 @@ const StyledBtn = styled(Button)(({ theme }) => ({
 
 
 const useStyles = makeStyles((theme: any) => ({
-    root: {
-
+    menuBotton: {
+        '& .icon-2x': {
+            fontSize: '1.5rem',
+            width: '1em',
+            height: '1em',
+            flexShrink: 0
+        }
     },
 
 }));
 
 
 const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayout = true }) => {
+    const classes = useStyles()
     const router = useRouter();
     const counter = useSelector((state: any) => state.reducer)
     const dispatch = useDispatch()
@@ -204,60 +221,75 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
             {showLayout && (<>
                 <StyledAppBar position="fixed" sx={{ display: { xs: 'none', md: 'block' }, borderRadius: '0 0 10px 10px' }}>
                     <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
+                        <Typography variant="h6" component="div" sx={{ width: '150px' }} >
 
                             <a onClick={async () => { router.push('/'); setGoLogin(false); }}>{process.env.NEXT_PUBLIC_APP_NAME}</a>
                         </Typography>
-
-                        <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
-                            <Tooltip title="Change language">
-                                <StyledBtnIcon
-
-                                    aria-controls="fade-menu"
-                                    aria-haspopup="true"
-                                    aria-expanded={openMenu ? 'true' : undefined}
-                                    onClick={handleClick}
-                                >
-                                    <TranslateIcon />
-                                </StyledBtnIcon>
-                            </Tooltip>
-                            <Menu
-                                id="fade-menu"
-                                MenuListProps={{
-                                    'aria-labelledby': 'fade-button',
-                                }}
-                                anchorEl={anchorEl}
-                                open={openMenu}
-                                onClose={handleClose}
+                        <div className={classes.menuBotton}>
+                            <BottomNavigation
+                                className={classes.menuBotton}
+                                showLabels
+                                sx={{ borderRadius: '10px 10px 0px 0px', width: '50vw' }}
                             >
-                                <MenuItem onClick={() => changeLanguage("en")}>English</MenuItem>
-                                <MenuItem onClick={() => changeLanguage("th")}>Thai</MenuItem>
-                                <Divider />
-                                <MenuItem onClick={handleClose}>Help to translate</MenuItem>
-                            </Menu>
-                        </Box>
-                        <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-                            {isAuthLogin ? (
-                                <Tooltip title="Login">
-                                    <Button
-                                        variant="outlined"
-                                        onClick={() => logout()}
-                                    >
-                                        {t("btn_logout")}
-                                    </Button>
-                                </Tooltip>
-                            ) : (
-                                <Tooltip title="Login">
-                                    <Button
-                                        variant="outlined"
-                                        onClick={() => setGoLogin(true)}
-                                    >
-                                        {t("btn_login")}
-                                    </Button>
-                                </Tooltip>
-                            )}
+                                <BottomNavigationAction label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                            </BottomNavigation>
+                        </div>
+                        <Box sx={{ display: 'flex', width: '150px' }}>
+                            <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
+                                <Tooltip title="Change language">
+                                    <StyledBtnIcon
 
+                                        aria-controls="fade-menu"
+                                        aria-haspopup="true"
+                                        aria-expanded={openMenu ? 'true' : undefined}
+                                        onClick={handleClick}
+                                    >
+                                        <TranslateIcon />
+                                    </StyledBtnIcon>
+                                </Tooltip>
+                                <Menu
+                                    id="fade-menu"
+                                    MenuListProps={{
+                                        'aria-labelledby': 'fade-button',
+                                    }}
+                                    anchorEl={anchorEl}
+                                    open={openMenu}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={() => changeLanguage("en")}>English</MenuItem>
+                                    <MenuItem onClick={() => changeLanguage("th")}>Thai</MenuItem>
+                                    <Divider />
+                                    <MenuItem onClick={handleClose}>Help to translate</MenuItem>
+                                </Menu>
+                            </Box>
+                            <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
+                                {isAuthLogin ? (
+                                    <Tooltip title="Login">
+                                        <Button
+                                            variant="outlined"
+                                            onClick={() => logout()}
+                                        >
+                                            {t("btn_logout")}
+                                        </Button>
+                                    </Tooltip>
+                                ) : (
+                                    <Tooltip title="Login">
+                                        <Button
+                                            variant="outlined"
+                                            onClick={() => setGoLogin(true)}
+                                        >
+                                            {t("btn_login")}
+                                        </Button>
+                                    </Tooltip>
+                                )}
+
+                            </Box>
                         </Box>
+
+
                     </Toolbar>
 
                 </StyledAppBar>
@@ -269,14 +301,16 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                     </Drawer>
                 </Box>
                 <Toolbar sx={{ display: { xs: 'none', md: 'block' } }} />
-                <Paper sx={{ display: { xs: 'block', md: 'none' }, position: 'fixed', bottom: 0, left: 0, right: 0, borderRadius: '10px 10px 0px 0px' }} elevation={3}>
+                <Paper sx={{ display: { xs: 'block', md: 'none' }, position: 'fixed', bottom: 0, left: 0, right: 0, borderRadius: '10px 10px 0px 0px', zIndex: 2 }} elevation={3}>
                     <BottomNavigation
+                        className={classes.menuBotton}
                         showLabels
-                        sx={{ borderRadius: '10px 10px 0px 0px' }}
+                        sx={{ borderRadius: '10px 10px 0px 0px', height: '65px', p: 1 }}
                     >
-                        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-                        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-                        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+                        <BottomNavigationAction label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
                     </BottomNavigation>
                 </Paper>
             </>)
@@ -284,7 +318,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
 
 
 
-            {(!goLogin) && <main><Box sx={{ mt: 1 }}>{children} </Box></main>}
+            {(!goLogin) && <main><Box sx={{ pt: 3, pb: { xs: '100px', md: '30px' } }}>{children} </Box></main>}
 
             {(goLogin) && <AuthComponent />}
 
