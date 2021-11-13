@@ -139,8 +139,12 @@ const useStyles = makeStyles((theme: any) => ({
             height: '1em',
             flexShrink: 0
         },
-        '& .btn':{
+        '& .btn': {
             color: `${theme.palette.primary.main}`
+        },
+        '& .btn-active': {
+            color: `#545454 !important`,
+            pointerEvents: 'none'
         }
     },
     appBar: {
@@ -193,6 +197,13 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
         dispatch(logoutStore())
     }
 
+    const goRouter = (route: string) => {
+        router.push(route)
+        if (route == "/") {
+            setGoLogin(false)
+        }
+    }
+
     useEffect(() => {
         console.log("L_auth", isAuth);
 
@@ -229,7 +240,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
             {showLayout && (<>
                 <StyledAppBar position="fixed" sx={{ display: { xs: 'none', md: 'block' }, borderRadius: '0 0 10px 10px' }} className={classes.appBar}>
                     <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ width: '150px' }} className="title-web cursor-pointer" onClick={async () => { router.push('/'); setGoLogin(false); }}>
+                        <Typography variant="h6" component="div" sx={{ width: '150px' }} className="title-web cursor-pointer select-none" onClick={async () => { router.push('/'); setGoLogin(false); }}>
 
                             {process.env.NEXT_PUBLIC_APP_NAME}
                         </Typography>
@@ -239,13 +250,13 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                                 showLabels
                                 sx={{ borderRadius: '10px 10px 0px 0px', width: '50vw' }}
                             >
-                                <BottomNavigationAction className="btn" label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                                <BottomNavigationAction className="btn" label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                                <BottomNavigationAction className="btn" label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                                <BottomNavigationAction className="btn" label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                                <BottomNavigationAction className={`btn ${(router.pathname === "/" && !goLogin) && "btn-active"}`} label={t("home")} icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/")} />
+                                <BottomNavigationAction className={`btn ${router.pathname === "/pet" && "btn-active"}`} label={t("pet")} icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/pet")} />
+                                <BottomNavigationAction className={`btn ${router.pathname === "/chat" && "btn-active"}`} label={t("chat")} icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/chat")} />
+                                <BottomNavigationAction className={`btn ${router.pathname === "/profile" && "btn-active"}`} label={t("profile")} icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/profile")} />
                             </BottomNavigation>
                         </div>
-                        <Box sx={{ display: 'flex', width: '150px' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '150px' }}>
                             <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 1.5 }}>
                                 <Tooltip title="Change language">
                                     <StyledBtnIcon
@@ -309,16 +320,16 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
                     </Drawer>
                 </Box>
                 <Toolbar sx={{ display: { xs: 'none', md: 'block' } }} />
-                <Paper sx={{ display: { xs: 'block', md: 'none' }, position: 'fixed', bottom: 0, left: 0, right: 0, borderRadius: '10px 10px 0px 0px', zIndex: 2 }} elevation={3}>
+                <Paper sx={{ display: { xs: 'block', md: 'none' }, position: 'fixed', bottom: 0, left: 0, right: 0, borderRadius: '10px 10px 0px 0px', zIndex: 99999999 }} elevation={3}>
                     <BottomNavigation
                         className={classes.menuBotton}
                         showLabels
                         sx={{ borderRadius: '10px 10px 0px 0px', height: '65px', p: 1 }}
                     >
-                        <BottomNavigationAction className="btn" label="Home" icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                        <BottomNavigationAction className="btn" label="Pet" icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                        <BottomNavigationAction className="btn" label="Chat" icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} />
-                        <BottomNavigationAction className="btn" label="Chat" icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} />
+                        <BottomNavigationAction className={`btn ${(router.pathname === "/" && !goLogin) && "btn-active"}`} label={t("home")} icon={<HomeIcon className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/")} />
+                        <BottomNavigationAction className={`btn ${router.pathname === "/pet" && "btn-active"}`} label={t("pet")} icon={<PetsIcon className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/pet")} />
+                        <BottomNavigationAction className={`btn ${router.pathname === "/chat" && "btn-active"}`} label={t("chat")} icon={<IoIosChatbubbles className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/chat")} />
+                        <BottomNavigationAction className={`btn ${router.pathname === "/profile" && "btn-active"}`} label={t("profile")} icon={<AccountCircleIcon className="icon-2x" />} sx={{ borderRadius: 2 }} onClick={() => goRouter("/profile")} />
                     </BottomNavigation>
                 </Paper>
             </>)
@@ -328,7 +339,7 @@ const Layout: NextPage<NewsFeedItemProps> = ({ children, user, isAuth, showLayou
 
             {(!goLogin) && <main><Box sx={{ pt: 3, pb: { xs: '100px', md: '30px' } }}>{children} </Box></main>}
 
-            {(goLogin) && <AuthComponent />}
+            {(goLogin) && <main><AuthComponent /></main>}
 
 
         </>

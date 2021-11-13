@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Card, CardMedia, Container, Grid, Typography } from '@mui/material'
 import { Box, ThemeProvider, createTheme } from '@mui/system';
 import { makeStyles } from '@mui/styles';
+import { useTranslation, Trans } from "react-i18next";
 
 const dataPet = [
     { id: 1, img: "/assets/images/dog.png", text: "สุนัข" },
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme: any) => ({
 
 const ContentMain = (props: any) => {
     const classes = useStyles();
-
+    const { t, i18n } = useTranslation()
     const clickPet = (key: any) => {
         console.log(key);
 
@@ -46,7 +47,7 @@ const ContentMain = (props: any) => {
         <>
             <Container fixed  className={classes.root}>
                 <Typography variant="h5" gutterBottom component="div" sx={{ pb: 1 }}>
-                    เลือกรับอุปการะ
+                    {t("title_pet")}
                 </Typography>
 
                 <Grid container spacing={2}>

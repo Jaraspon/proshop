@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/Logo-web.png" />
       </Head>
-      {/* <Script src="https://kit.fontawesome.com/fb45de22ea.js" ></Script> */}
+      <Script src="/assets/js/index.js" ></Script>
       {/* <Script src="/assets/fontawesome/original/all.js" ></Script> */}
       <ThemeProvider theme={theme}>
         <Provider store={store} >

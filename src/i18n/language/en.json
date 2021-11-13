@@ -14,6 +14,10 @@
     "gender": "Gender",
     "female": "Female",
     "male": "Male",
-    "btn_logout": "Logout"
-
+    "btn_logout": "Logout",
+    "home": "Home",
+    "pet": "Pet",
+    "chat": "Chat",
+    "profile": "Profile",
+    "title_pet": "Choose Pathumkara"
 }

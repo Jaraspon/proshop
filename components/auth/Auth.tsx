@@ -83,13 +83,14 @@ const Auth = (props: any) => {
     return (
         <>
             <LoadingComponent loading={checked} />
-            <Container fixed className={classes.root}>
+            <Container fixed className={`${classes.root}`} >
                 <Stack
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
                     spacing={1}
-                    sx={{ minHeight: '100vh' }}
+                    sx={{ minHeight: 'calc(var(--vh, 1vh) * 100)' }}
+
                 >
                     <Box component="div" sx={{ maxWidth: 420 }}>
                         {routerPath ? (
