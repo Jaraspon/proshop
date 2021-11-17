@@ -1,15 +1,18 @@
 const initialState = {
   product: {},
   products: [],
-  auth: false
+  pathLogin: false
 
 };
 
 export const reducer = (state = initialState, action: any) => {
   switch (action.type) {
+    case "PATH_LOGIN":
+      return {
+        ...state,
+        pathLogin: action.payload,
+      };
     case "LOGIN":
-      console.log('l', action.payload);
-
       return {
         ...state,
         auth: action.payload,

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Layout from '@/components/layout/index';
+import Layout from '@/components/layout/DefaultLayout';
 
 import { getMiddleware } from '@/src/middleware'
 
@@ -10,6 +10,7 @@ const Profile = (props: any) => {
         <>
             <Layout user={auth?.user} isAuth={auth?.isAuth} showLayout={true}>
                 profile
+                
             </Layout>
 
         </>

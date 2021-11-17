@@ -4,6 +4,16 @@ import Cookies from 'js-cookie'
 // const env = getConfig().publicRuntimeConfig;
 
 
+export const pathLoginStore = (login: boolean) => async (dispatch: any, subscribe: any) => {
+    console.log('login');
+
+    var data = login
+    console.log(data);
+
+    dispatch({ type: 'PATH_LOGIN', payload: data })
+    return subscribe({ type: 'PATH_LOGIN', payload: data })
+}
+
 export const loginStore = () => async (dispatch: any, subscribe: any) => {
     console.log('login');
 

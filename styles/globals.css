@@ -47,7 +47,7 @@ p {
     margin: 0;
 }
 
-main {
+.main {
     min-height: 100vh;
     background-color: #b9f1ff;
     background: -webkit-linear-gradient(180deg, #b4c4ff, #b9f1ff);

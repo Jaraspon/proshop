@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useRouter } from 'next/router';
+import { NextPage } from 'next'
 import { useDispatch, useSelector } from 'react-redux'
-const local = require('local-storage');
-const axios = require('axios');
-import Link from '@/components/Link'
-import Logo from '@/components/Logo'
-import LoadingButton from '@mui/lab/LoadingButton';
 import { useTranslation, Trans } from "react-i18next";
+import Cookies from 'js-cookie'
+const local = require('local-storage');
+import axios from '@axios';
+import { styled } from '@mui/system';
 import {
     Container,
     FormControl,
@@ -27,45 +26,64 @@ import {
     InputLabel,
     InputAdornment,
     IconButton,
-    Fade
+    Fade,
+    TextFieldProps,
+    OutlinedInputProps
 } from '@mui/material';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import CloseIcon from '@mui/icons-material/Close';
-import { Box } from '@mui/system';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 import { loginStore } from '@/store/actions';
-import Cookies from 'js-cookie'
+
+// ICON
+import CloseIcon from '@mui/icons-material/Close';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+
+// COMPONENT
+import Logo from '@/components/Logo'
+interface NewsFeedItemProps {
+    clickLink: Function,
+    loadingFade: boolean,
+    loadingFadeTime: number
+
+}
 
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            paddingTop: '10px',
-            paddingBottom: '30px',
-            ['@media (max-width: 599px) ']: {
-                // minHeight: 'calc(100vh) ',
-                // minHeight: 'calc(100vh - 56px) ',
-            },
-            '& .marked-link': {
-                color: `${theme.palette.primary.main} !important`,
-                fontWeight: 'bold',
-                fontSize: '1.2rem'
-            },
-            '& .input-hover div': {
-                '&:hover fieldset': {
-                    borderColor: `${theme.palette.primary.main}`
-                }
-            },
+const StyledForm = styled('form')(({ theme }) => ({
+    paddingTop: '10px',
+    paddingBottom: '30px',
+}));
+
+const StyledText = styled('p')(({ theme }) => ({
+    userSelect: 'none',
+}));
+
+const StyledMarkedText = styled('p')(({ theme }) => ({
+    color: `${theme.palette.primary.main} !important`,
+    fontWeight: 'bold',
+    fontSize: '1.2rem',
+    userSelect: 'none',
+    cursor: 'pointer'
+}));
+
+
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+    '& .MuiOutlinedInput-root': {
+        '&:hover fieldset': {
+            borderColor: `${theme.palette.primary.main}`
         },
-    }),
-);
+    }
 
-const Login = (props: any) => {
-    const { clickLink, loadingFade, loadingFadeTime } = props
-    const counter = useSelector((state: any) => state.reducer)
-    const classes = useStyles();
-    const dispatch = useDispatch()
+}));
+
+
+
+
+
+const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, loadingFadeTime = 0 }) => {
     const { t, i18n } = useTranslation()
+    const counter = useSelector((state: any) => state.reducer);
+    const dispatch = useDispatch();
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [alert, setAlert] = useState({
         open: false,
@@ -80,7 +98,6 @@ const Login = (props: any) => {
         disabled: true,
         showPassword: false,
     })
-
 
     const changeInput = (e: any) => {
         e.preventDefault();
@@ -98,12 +115,12 @@ const Login = (props: any) => {
                 setAlert({ ...alert, open: false, mess: _res?.status?.message });
                 local.set('pethouse_auth', _res.user.token);
                 Cookies.set('pethouse_auth', _res.user.token);
-              
+
             } else {
                 console.log('w');
 
                 setAlert({ ...alert, open: true, mess: _res?.status?.message });
-            }  dispatch(loginStore())
+            } dispatch(loginStore())
             // setTransition(() => TransitionLeft);
             setLoadingLogin(false)
 
@@ -131,22 +148,19 @@ const Login = (props: any) => {
 
         setAlert({ ...alert, ['open']: false });
     };
-    useEffect(() => {
-        console.log(counter);
-        
-    }, [counter])
+
     useEffect(() => {
         if (dataForm.username != '' && dataForm.password != '' && dataForm.password.length >= 6) {
             setDataForm({ ...dataForm, disabled: false })
             return;
         }
         setDataForm({ ...dataForm, disabled: true })
-    }, [dataForm.username, dataForm.password])
+    }, [dataForm.username, dataForm.password]);
 
     return (
         <>
             <Fade in={!loadingFade} timeout={loadingFadeTime} >
-                <form onSubmit={submitLogin} className={`${classes.root} select-none`}>
+                <StyledForm onSubmit={submitLogin}>
                     <Stack
                         sx={{ mb: 3 }}
                         direction="column"
@@ -167,22 +181,25 @@ const Login = (props: any) => {
                         spacing={1}
                     >
                         {/* <p>Do you have an account? </p><Link to="/auth/register" style="marked-register">Sign up for <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></Link> */}
-                        <p>{t('text_content_login')} </p><a onClick={() => clickLink(false)} className="marked-link">{t('text_content_login_link')} <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></a>
+                        <StyledText>{t('text_content_login')} </StyledText><StyledMarkedText onClick={() => clickLink(false)}>{t('text_content_login_link')} <span className="text-uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span></StyledMarkedText>
                     </Stack>
 
-                    <TextField
-                        className="input-hover input-bg"
-                        sx={{ mb: 2 }}
-                        type="text"
-                        fullWidth
-                        placeholder={t("input_username_or_email")}
-                        name="username"
-                        inputProps={{
-                            'data-key': 'username'
-                        }}
-                        onChange={changeInput}
-                    />
-                    <FormControl fullWidth sx={{ mb: 4 }} className="input-hover input-bg">
+
+                    <StyledFormControl fullWidth sx={{ mb: 2 }} className="input-hover input-bg">
+                        {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
+                        <OutlinedInput
+                            className="input-hover input-bg"
+                            type="text"
+                            fullWidth
+                            placeholder={t("input_username_or_email")}
+                            name="username"
+                            inputProps={{
+                                'data-key': 'username'
+                            }}
+                            onChange={changeInput}
+                        />
+                    </StyledFormControl>
+                    <StyledFormControl fullWidth sx={{ mb: 4 }} className="input-hover input-bg">
                         {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
                         <OutlinedInput
                             type={dataForm.showPassword ? 'text' : 'password'}
@@ -208,7 +225,7 @@ const Login = (props: any) => {
 
                             placeholder={t("input_password")}
                         />
-                    </FormControl>
+                    </StyledFormControl>
                     <LoadingButton
                         className="btn-main"
                         disabled={dataForm.disabled}
@@ -221,7 +238,7 @@ const Login = (props: any) => {
                     >
                         {t("btn_login")}
                     </LoadingButton>
-                </form>
+                </StyledForm>
             </Fade>
             <Snackbar
 
@@ -261,10 +278,5 @@ const Login = (props: any) => {
     )
 }
 
-Login.propTypes = {
-    clickLink: PropTypes.func,
-    loadingFade: PropTypes.bool,
-    loadingFadeTime: PropTypes.number
-}
 
 export default Login

@@ -40,11 +40,11 @@ const theme = createTheme({
                     minWidth: '39px',
                     minHeight: '39px',
                     borderRadius: '9px',
-                    '&.Mui-disabled':{
+                    '&.Mui-disabled': {
                         color: 'rgba(0, 0, 0, 0.26) !important',
                         opacity: '0.6'
                     },
-                    '&.MuiLoadingButton-loading':{
+                    '&.MuiLoadingButton-loading': {
                         color: 'transparent !important'
                     }
                 },
@@ -60,13 +60,13 @@ const theme = createTheme({
                 {
                     props: { variant: 'outlined' },
                     style: {
-                      
+
                     },
                 },
                 {
                     props: { variant: 'contained' },
                     style: {
-                      
+
                     },
                 },
                 {
@@ -84,9 +84,11 @@ const theme = createTheme({
                 root: {
 
                     borderRadius: '9px',
+                   
                 },
             },
         },
+       
     },
 });
 

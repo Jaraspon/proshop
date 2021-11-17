@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import Layout from '@/components/layout/index';
+import Layout from '@/components/layout/DefaultLayout';
 import Link from '@/components/Link'
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useTranslation, Trans } from "react-i18next";

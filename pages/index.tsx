@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 const axios = require('axios');
 
-import Layout from '@/components/layout/index';
+import Layout from '@/components/layout/DefaultLayout';
 import AuthComponent from '@/components/auth/Auth';
 import ContentMainComponent from '@/components/ContentMain';
 // import LoadingOneComponent from '@/components/LoadingOne';
@@ -66,7 +66,8 @@ const Home: NextPage<NewsFeedItemProps> = ({ auth }) => {
       <LoadingOneComponent loading={loadingOne} />
       {(!loadingOne) &&
         <Layout user={auth?.user} isAuth={auth?.isAuth} showLayout={true}>
-          Home
+          {/* Homeccb */}
+          {/* <div>555</div> */}
           {/* <ContentMainComponent /> */}
           {/* <AuthComponent /> */}
         </Layout>
@@ -97,3 +98,5 @@ export async function getServerSideProps(context: any) {
 
 
 export default Home
+
+

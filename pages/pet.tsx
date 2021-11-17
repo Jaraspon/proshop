@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 const axios = require('axios');
 
-import Layout from '@/components/layout/index';
+import Layout from '@/components/layout/DefaultLayout';
 import AuthComponent from '@/components/auth/Auth';
 import ContentMainComponent from '@/components/ContentMain';
 // import LoadingOneComponent from '@/components/LoadingOne';
@@ -37,12 +37,12 @@ const Pet: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const [user, setUser] = useState([])
   const [loadingOne, setLoadingnOne] = useState(true)
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoadingnOne(false)
-    }, 2700);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoadingnOne(false)
+  //   }, 2700);
 
-  }, [])
+  // }, [])
 
   useEffect(() => {
 
@@ -53,7 +53,7 @@ const Pet: NextPage<NewsFeedItemProps> = ({ auth }) => {
       {/* <LoadingOneComponent loading={loadingOne} />
       {(!loadingOne) && */}
         <Layout user={auth?.user} isAuth={auth?.isAuth} showLayout={true}>
-          <ContentMainComponent />
+          {/* <ContentMainComponent /> */}
           {/* <AuthComponent /> */}
         </Layout>
       {/* } */}

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Layout from '@/components/layout/index';
+import Layout from '@/components/layout/DefaultLayout';
 
 import { getMiddleware } from '@/src/middleware'
 

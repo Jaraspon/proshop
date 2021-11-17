@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 var local = require('local-storage');
 
 const axios = require('axios');
-import Layout from '@/components/layout/index';
+import Layout from '@/components/layout/DefaultLayout';
 import Link from '@/components/Link'
 import LoginComponent from '@/components/auth/Login'
 import LoadingButton from '@mui/lab/LoadingButton';

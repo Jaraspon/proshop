@@ -20,6 +20,7 @@ import dynamic from 'next/dynamic'
 const LoadingComponent = dynamic(() => import('@/components/Loading'))
 
 import { createStyles, makeStyles } from '@mui/styles';
+
 import {
     Container,
     Theme,
@@ -28,33 +29,33 @@ import {
 import { Box } from '@mui/system';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
+// const useStyles = makeStyles((theme) =>
+//     createStyles({
+//         root: {
 
-        },
-        language: {
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            padding: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            '& .action': {
-                fontSize: ' 1.2rem',
-                fontWeight: 'bold',
-                color: `${theme.palette.primary.main}`
-            }
-        }
-    }),
-);
+//         },
+//         language: {
+//             position: 'absolute',
+//             right: 0,
+//             top: 0,
+//             padding: '20px',
+//             display: 'flex',
+//             alignItems: 'center',
+//             '& .action': {
+//                 fontSize: ' 1.2rem',
+//                 fontWeight: 'bold',
+//                 color: `${theme.palette.primary.main}`
+//             }
+//         }
+//     }),
+// );
 
 const Auth = (props: any) => {
-    const classes = useStyles();
+    // const classes = useStyles();
     const [routerPath, setRouterPath] = useState(true)
     const [checked, setChecked] = useState(false)
     const { t, i18n } = useTranslation()
-    const [lng, setLng] = useState('th')
+
     useEffect(() => {
         setTimeout(() => {
             setChecked(false)
@@ -67,37 +68,32 @@ const Auth = (props: any) => {
             setRouterPath(res)
         }, 1000);
     }
-    const changeLanguage = (lng: any) => {
-        i18n.changeLanguage(lng);
-        setLng(lng)
-    };
-
-    useEffect(() => {
-        if (local.get('i18nextLng')) {
-            setLng(local.get('i18nextLng'))
-        }
-        // (ls.get('i18nextLng') == 'th' && setDataMenuItem(jsonDataTh.menu_main))
-    }, [lng])
+ 
+    // useEffect(() => {
+    //     if (local.get('i18nextLng')) {
+    //         setLng(local.get('i18nextLng'))
+    //     }
+    //     // (ls.get('i18nextLng') == 'th' && setDataMenuItem(jsonDataTh.menu_main))
+    // }, [lng])
 
 
     return (
         <>
             <LoadingComponent loading={checked} />
-            <Container fixed className={`${classes.root}`} >
+            <Container fixed  >
                 <Stack
                     direction="column"
                     justifyContent="center"
                     alignItems="center"
                     spacing={1}
-                    sx={{ minHeight: 'calc(var(--vh, 1vh) * 100)' }}
+                    sx={{ height: 'calc(100vh - 65px)' }}
 
                 >
                     <Box component="div" sx={{ maxWidth: 420 }}>
                         {routerPath ? (
-                            <LoginComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />
+                             <LoginComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />
                         ) : (
-                            <RegisterComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />
-                        )}
+                            '<RegisterComponent clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />')}
 
                     </Box>
                 </Stack>
