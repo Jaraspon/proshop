@@ -1,6 +1,5 @@
 const initialState = {
-  product: {},
-  products: [],
+  auth: false,
   pathLogin: false
 
 };

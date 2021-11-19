@@ -37,12 +37,15 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ theme }) 
     }
 }));
 
+interface PropsType {
+    user: object,
+    isAuth: boolean
+}
 
 
-const Navbar = (props: any) => {
+const Navbar = ({ user, isAuth }: PropsType) => {
     const counter = useSelector((state: any) => state.reducer)
     const dispatch = useDispatch()
-    const { authLogin } = props
     const router = useRouter();
     const { t, i18n } = useTranslation();
 
@@ -82,7 +85,7 @@ const Navbar = (props: any) => {
                     data-route="/chat"
                     onClick={clickToRoute}
                 />
-                {isAuthLogin ? (
+                {isAuth || counter.auth ? (
                     <StyledBottomNavigationAction
                         className={`${(router.pathname === "/profile" && !counter.pathLogin) && "action"}`}
                         label={t("profile")}

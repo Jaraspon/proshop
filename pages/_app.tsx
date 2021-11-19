@@ -11,8 +11,13 @@ import theme from "@/src/theme";
 import { createTheme } from "@mui/material/styles";
 import "@/src/i18n/index";
 import CssBaseline from '@mui/material/CssBaseline';
+import { useSSR } from 'react-i18next';
+import { useEffect } from 'react';
+import { appWithTranslation } from 'next-i18next'
+
 
 function MyApp({ Component, pageProps }: AppProps) {
+
 
   return (
     <>
@@ -25,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Script src="/assets/js/index.js" ></Script>
       {/* <Script src="/assets/fontawesome/original/all.js" ></Script> */}
       <ThemeProvider theme={theme}>
-      <CssBaseline />
+        <CssBaseline />
         <Provider store={store} >
           <Component {...pageProps} />
         </Provider>
@@ -34,4 +39,5 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   )
 }
-export default MyApp
+
+export default appWithTranslation(MyApp)

@@ -8,7 +8,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { pathLoginStore } from '@/store/actions';
-
+var local = require('local-storage');
 
 // COMPONENT
 import ButtonLanguage from '@/components/ButtonLanguage'
@@ -74,9 +74,13 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ theme }) 
     }
 }));
 
+interface PropsType {
+    user: object,
+    isAuth: boolean
+}
 
 
-const C_AppBar = (props: any) => {
+const C_AppBar = ({ user, isAuth }: PropsType) => {
     const counter = useSelector((state: any) => state.reducer)
     const dispatch = useDispatch()
     const router = useRouter();
@@ -141,7 +145,7 @@ const C_AppBar = (props: any) => {
                                 data-route="/chat"
                                 onClick={clickToRoute}
                             />
-                            {isAuthLogin ? (
+                            {isAuth || counter.auth ? (
                                 <StyledBottomNavigationAction
                                     className={`${(router.pathname === "/profile" && !counter.pathLogin) && "action"}`}
                                     label={t("profile")}
@@ -158,8 +162,6 @@ const C_AppBar = (props: any) => {
                                     onClick={clickToRoute}
                                 />
                             )}
-
-
                         </StyledBottomNavigation>
                     </StyledBoxCenter>
                     <StyledBoxRight component="div">

@@ -10,7 +10,7 @@ import { useRouter } from 'next/dist/client/router';
 const axios = require('axios');
 
 import Layout from '@/components/layout/DefaultLayout';
-import AuthComponent from '@/components/auth/Auth';
+// import AuthComponent from '@/components/auth/Auth';
 import ContentMainComponent from '@/components/ContentMain';
 // import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
@@ -20,7 +20,7 @@ import dynamic from 'next/dynamic'
 const LoadingOneComponent = dynamic(() => import('@/components/LoadingOne'))
 
 import { getMiddleware } from '@/src/middleware'
-
+import { useTranslation, Trans } from "react-i18next";
 
 interface NewsFeedItemProps {
   auth: {
@@ -33,7 +33,7 @@ const Pet: NextPage<NewsFeedItemProps> = ({ auth }) => {
   const counter = useSelector((state: any) => state.reducer)
   const dispatch = useDispatch()
   const router = useRouter();
-
+  const { t, i18n } = useTranslation()
   const [user, setUser] = useState([])
   const [loadingOne, setLoadingnOne] = useState(true)
 

@@ -9,8 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 const axios = require('axios');
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { i18n } from 'next-i18next'
+
 import Layout from '@/components/layout/DefaultLayout';
-import AuthComponent from '@/components/auth/Auth';
+import AuthComponent from '@/components/auth/AuthComponent';
 import ContentMainComponent from '@/components/ContentMain';
 // import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
@@ -92,9 +95,10 @@ export async function getServerSideProps(context: any) {
     })
   }
   return {
-    props: { auth: data }
+    props: { auth: data}
   }
 }
+
 
 
 export default Home

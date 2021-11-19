@@ -32,7 +32,7 @@ import {
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import { loginStore } from '@/store/actions';
+import { loginStore, pathLoginStore } from '@/store/actions';
 
 // ICON
 import CloseIcon from '@mui/icons-material/Close';
@@ -40,7 +40,10 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // COMPONENT
 import Logo from '@/components/Logo'
+import router from 'next/router';
 interface NewsFeedItemProps {
+    alert: Object,
+    setAlert: Function,
     clickLink: Function,
     loadingFade: boolean,
     loadingFadeTime: number
@@ -68,11 +71,14 @@ const StyledMarkedText = styled('p')(({ theme }) => ({
 
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
+
     '& .MuiOutlinedInput-root': {
+        background: '#fff',
         '&:hover fieldset': {
             borderColor: `${theme.palette.primary.main}`
         },
-    }
+    },
+
 
 }));
 
@@ -80,17 +86,12 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
 
 
 
-const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, loadingFadeTime = 0 }) => {
+const Login: NextPage<NewsFeedItemProps> = ({ alert, setAlert, clickLink, loadingFade = false, loadingFadeTime = 0 }) => {
     const { t, i18n } = useTranslation()
     const counter = useSelector((state: any) => state.reducer);
     const dispatch = useDispatch();
     const [loadingLogin, setLoadingLogin] = useState(false);
-    const [alert, setAlert] = useState({
-        open: false,
-        vertical: 'top',
-        horizontal: 'right',
-        mess: ''
-    });
+
 
     const [dataForm, setDataForm] = useState({
         username: '',
@@ -112,24 +113,21 @@ const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, lo
         axios.post('/api/auth/login', { username: dataForm.username, password: dataForm.password }).then(function (res: any) {
             const _res = res.data
             if (_res?.status?.success) {
-                setAlert({ ...alert, open: false, mess: _res?.status?.message });
                 local.set('pethouse_auth', _res.user.token);
                 Cookies.set('pethouse_auth', _res.user.token);
-
             } else {
-                console.log('w');
+                setAlert({ ...alert, open: true, severity: "error", mess: _res?.status?.message });
+            }
 
-                setAlert({ ...alert, open: true, mess: _res?.status?.message });
-            } dispatch(loginStore())
-            // setTransition(() => TransitionLeft);
             setLoadingLogin(false)
-
-            // router.push(`/`)
+            // router.push('/')
+            dispatch(loginStore(true))
+            dispatch(pathLoginStore(false))
         }).catch(function (error: any) {
             console.log(error.response.data.status.message);
-            setAlert({ ...alert, open: true, mess: error.response.data.status.message });
+            setAlert({ ...alert, open: true, severity: "error", mess: error.response.data.status?.message });
             setLoadingLogin(false)
-            dispatch(loginStore())
+            dispatch(loginStore(false))
         });
     }
 
@@ -141,13 +139,7 @@ const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, lo
         // event.preventDefault();
     };
 
-    const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
 
-        setAlert({ ...alert, ['open']: false });
-    };
 
     useEffect(() => {
         if (dataForm.username != '' && dataForm.password != '' && dataForm.password.length >= 6) {
@@ -185,10 +177,9 @@ const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, lo
                     </Stack>
 
 
-                    <StyledFormControl fullWidth sx={{ mb: 2 }} className="input-hover input-bg">
+                    <StyledFormControl fullWidth sx={{ mb: 2 }}>
                         {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
                         <OutlinedInput
-                            className="input-hover input-bg"
                             type="text"
                             fullWidth
                             placeholder={t("input_username_or_email")}
@@ -199,7 +190,7 @@ const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, lo
                             onChange={changeInput}
                         />
                     </StyledFormControl>
-                    <StyledFormControl fullWidth sx={{ mb: 4 }} className="input-hover input-bg">
+                    <StyledFormControl fullWidth sx={{ mb: 4 }}>
                         {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
                         <OutlinedInput
                             type={dataForm.showPassword ? 'text' : 'password'}
@@ -240,40 +231,6 @@ const Login: NextPage<NewsFeedItemProps> = ({ clickLink, loadingFade = false, lo
                     </LoadingButton>
                 </StyledForm>
             </Fade>
-            <Snackbar
-
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={alert.open}
-                message="I love snacks"
-                key={alert.vertical + alert.horizontal}
-                autoHideDuration={5000}
-            // TransitionComponent={transition}
-
-            >
-
-                <Alert
-                    severity="error"
-                    sx={{ borderRadius: 3 }}
-                    action={
-                        <>
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                sx={{ p: 0.5 }}
-                                onClick={handleAlertClose}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>
-                    }
-                >
-                    <AlertTitle>Error</AlertTitle>
-                    {alert.mess}
-
-
-                </Alert>
-
-            </Snackbar>
         </>
     )
 }

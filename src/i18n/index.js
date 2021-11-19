@@ -18,7 +18,8 @@ i18n
             }
         },
         fallbackLng: "en",
-        debug: false,
+        locales: ['en', 'th'],
+        debug: true,
 
         // have a common namespace used around the full app
         ns: ["translations"],
@@ -28,7 +29,10 @@ i18n
 
         interpolation: {
             escapeValue: false
-        }
+        },
+        react: {
+            useSuspense: false,  // << ----- this line
+        },
     });
 
 export default i18n;

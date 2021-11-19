@@ -39,8 +39,8 @@ const store = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             username: 'required',
             password: 'required|minLength:6',
             email: 'required|email',
-            firstName: 'required',
-            lastName: 'required',
+            firstname: 'required',
+            lastname: 'required',
             gender: 'required',
         });
 
@@ -77,8 +77,8 @@ const store = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             [
                 v.inputs.username || '',
                 v.inputs.email || '',
-                v.inputs.firstName || '',
-                v.inputs.lastName || '',
+                v.inputs.firstname || '',
+                v.inputs.lastname || '',
                 v.inputs.gender || 'female',
                 timestamp,
                 timestamp
@@ -99,7 +99,7 @@ const store = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             let __res = {
                 status: {
                     success: true,
-                    message: ''
+                    message: 'Register success'
                 },
                 data: { resDB },
                 timestamp: Math.floor(Date.now() / 1000)
@@ -114,12 +114,12 @@ const store = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     } catch (err) {
         let __res = {
             status: {
-                success: true,
-                message: 'register error'
+                success: false,
+                message: 'Register error'
             },
             timestamp: Math.floor(Date.now() / 1000)
         }
-        res.status(500).json(__res)
+        res.status(400).json(__res)
     }
 
 

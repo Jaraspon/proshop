@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
             position: 'fixed',
             width: '100%',
             height: '100vh',
-            zIndex: 9999999,
+            zIndex: 1300,
             display: 'flex',
             alignContent: 'center',
             justifyContent: 'center',

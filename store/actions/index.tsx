@@ -14,10 +14,10 @@ export const pathLoginStore = (login: boolean) => async (dispatch: any, subscrib
     return subscribe({ type: 'PATH_LOGIN', payload: data })
 }
 
-export const loginStore = () => async (dispatch: any, subscribe: any) => {
+export const loginStore = (isLogin: boolean) => async (dispatch: any, subscribe: any) => {
     console.log('login');
 
-    var data = true
+    var data = isLogin
     console.log(data);
 
     dispatch({ type: 'LOGIN', payload: data })

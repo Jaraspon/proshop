@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 const jwt = require('jsonwebtoken');
 // import { JWT } from 'server.config'
-// import { middleware } from '@/src/middleware'
+import { middleware } from '@/src/middleware'
 const db = require('@/database/db');
 
 type Data = {
@@ -28,51 +28,60 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
 const get = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     try {
-        // console.log(req);
-        
-        // let auth = middleware(req) // is user login
-        // console.log('auth', auth.id);
 
-        // if (auth) {
+        let auth = middleware(req) // is user login
+    
+        if (auth) {
             // console.log('pass');
-            // let resDB = await db.query('SELECT id,username,firstname,lastname,email,gender,phone,line,address,created_at,updated_at FROM users WHERE id = ? limit 1', [auth.id])
-            // let userDB = await resDB.map((val: any, idx: any) => val)[0]
+            let resDB = await db.query(`
+            SELECT 
+                users.id,
+                users.username,
+                users.firstname,
+                users.lastname,
+                users.email,
+                users.gender,
+                users.phone,
+                line.line_key,
+                users.address,
+                users.created_at
+            FROM users LEFT JOIN line ON users.id = line.user_id WHERE users.id = ? limit 1`, [auth.id])
+            let userDB = await resDB.map((val: any, idx: any) => val)[0]
+           
             let __res = {
                 status: {
                     success: true,
                     message: ''
                 },
                 user: {
-                    id: 1,
-                    // id: userDB.id,
-                    username: "userDB.username",
-                //     username: userDB.username,
-                //     firstname: userDB.firstname,
-                //     lastname: userDB.lastname,
-                //     fullname: `${userDB.firstname} ${userDB.lastname}`,
-                //     email: userDB.email,
-                //     gender: userDB.gernder,
-                //     phone: userDB.phone || '',
-                //     line: userDB.line || '',
-                //     created_at: userDB.created_at,
-                //     updated_at: userDB.updated_at
+                    id: userDB.id,
+                    username: userDB.username,
+                    firstname: userDB.firstname,
+                    lastname: userDB.lastname,
+                    fullname: `${userDB.firstname} ${userDB.lastname}`,
+                    email: userDB.email,
+                    gender: userDB.gernder,
+                    phone: userDB.phone || '',
+                    line: userDB.line_key || '',
+                    created_at: Math.floor(Date.parse(userDB.created_at) / 1000)
 
                 },
                 timestamp: Math.floor(Date.now() / 1000)
             }
+        
             res.status(200).json(__res)
-        // } else {
-        //     console.log('fail');
-        //     let __res = {
-        //         status: {
-        //             success: false,
-        //             message: 'Please login to your account.'
-        //         },
-        //         timestamp: Math.floor(Date.now() / 1000)
-        //     }
-        //     res.status(503).json(__res)
+        } else {
+            console.log('fail');
+            let __res = {
+                status: {
+                    success: false,
+                    message: 'Please login to your account.'
+                },
+                timestamp: Math.floor(Date.now() / 1000)
+            }
+            res.status(400).json(__res)
 
-        // }
+        }
     } catch (err) {
         let __res = {
             status: {
@@ -81,6 +90,6 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             },
             timestamp: Math.floor(Date.now() / 1000)
         }
-        res.status(503).json(__res)
+        res.status(400).json(__res)
     }
 }

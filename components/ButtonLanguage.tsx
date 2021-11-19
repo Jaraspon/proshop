@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { AppBar, BottomNavigation, BottomNavigationAction, Box, Button, Divider, Drawer, Menu, MenuItem, Paper, Toolbar, Tooltip, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-
+import { useRouter } from 'next/router';
 import { useTranslation, Trans } from "react-i18next";
 
 // ICON
@@ -20,6 +20,7 @@ const StyledBtnIcon = styled(Button)(({ theme }) => ({
 }));
 
 const ButtonLanguage = (props: any) => {
+    const router = useRouter();
     const { t, i18n } = useTranslation()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl);
@@ -34,6 +35,12 @@ const ButtonLanguage = (props: any) => {
         console.log(`e`, e.currentTarget.dataset)
         i18n.changeLanguage(language);
         setAnchorEl(null);
+        if (language == "en") {
+            router.push(router.pathname,router.pathname, { locale: "en" })
+        } else if (language == "th") {
+
+            router.push(router.pathname,router.pathname, { locale: "th" })
+        }
     };
     return (
         <>
