@@ -9,13 +9,13 @@ import axios from '@axios'
 
 
 
-import LoginComponent from '@/components/auth/LoginComponent'
-import RegisterComponent from '@/components/auth/RegisterComponent'
+import LoginComponent from '@/src/components/auth/LoginComponent'
+import RegisterComponent from '@/src/components/auth/RegisterComponent'
 
 
-const LoadingComponent = dynamic(() => import('@/components/Loading'))
+const LoadingComponent = dynamic(() => import('@/src/components/subcomponent/Loading'))
 
-import AlertComponent from '@/components/AlertComponent'
+import AlertComponent from '@/src/components/subcomponent/AlertComponent'
 import {
     Container,
     Stack,
@@ -71,13 +71,13 @@ const Auth = ({ }: PropsType) => {
             <Container fixed  >
                 <Stack
                     direction="column"
-                    justifyContent="center"
+                    justifyContent={{ sm:"flex-start"}}
                     alignItems="center"
                     spacing={1}
-                    sx={{ height: 'calc(100vh - 65px)' }}
+                    sx={{ height: 'calc(100vh - 85px)' }}
 
                 >
-                    <Box component="div" sx={{ maxWidth: 420 }}>
+                    <Box component="div" sx={{ maxWidth: 420    , pt: '76px' }}>
                         {routerPath ? (
                             <LoginComponent alert={alert} setAlert={setAlert} clickLink={clickLink} loadingFade={checked} loadingFadeTime={300} />
                         ) : (

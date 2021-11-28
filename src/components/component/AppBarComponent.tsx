@@ -6,12 +6,12 @@ import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/system';
 import { useTranslation, Trans } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
-
+import Image from 'next/image'
 import { pathLoginStore } from '@/store/actions';
 var local = require('local-storage');
 
 // COMPONENT
-import ButtonLanguage from '@/components/ButtonLanguage'
+import ButtonLanguage from '@/src/components/subcomponent/ButtonLanguage'
 
 // ICON
 import PetsIcon from '@mui/icons-material/Pets';
@@ -19,30 +19,40 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { IoIosChatbubbles } from 'react-icons/io';
 import LoginIcon from '@mui/icons-material/Login';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-    backgroundColor: '#ffffff',
+    padding: '10px',
+    background: `#ffffff !important`,
+    paddingBottom: `0 !important`,
     boxShadow: 'none',
-    borderBottom: '1px solid rgb(228, 228, 228) ',
+    borderBottom: 'none',
     color: '#616060',
-    maxHeight: '64px',
+    // maxHeight: '64px',
     minHeight: '64px',
     userSelect: 'none',
-    borderRadius: '0 0 10px 10px',
+
     '& .MuiToolbar-root': {
+        background: '#ffffff',
         display: 'flex',
         justifyContent: 'space-between',
+        borderRadius: '10px',
+        minHeight: '64px',
+        maxHeight: '64px',
+        boxShadow: '2px 2px 7px #cfcfcf',
     }
 }));
 
 const StyledTitle = styled('h2')(({ theme }) => ({
     cursor: 'pointer',
     margin: 0,
-    color: `${theme.palette.primary.main}`,
+    paddingLeft: '8px'
 }));
 
 const StyledBoxLeft = styled(Box)(({ theme }) => ({
     width: '200px',
+    display: 'flex',
+    alignItems: 'center'
 }));
 
 const StyledBoxCenter = styled(Box)(({ theme }) => ({
@@ -58,13 +68,16 @@ const StyledBoxRight = styled(Box)(({ theme }) => ({
 const StyledBottomNavigation = styled(BottomNavigation)(({ theme }) => ({
     backgroundColor: '#fff',
     borderRadius: '10px 10px 0px 0px',
-    width: '50vw'
+    width: '450px'
 }));
 
 const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
     fontSize: '1.5rem',
     borderRadius: '10px',
+    '& .MuiBottomNavigationAction-label':{
+        fontSize: '0.5rem',
+    },
     '&:hover': {
         background: `${theme.palette.primary.main}30`,
     },
@@ -117,8 +130,15 @@ const C_AppBar = ({ user, isAuth }: PropsType) => {
         <>
             <StyledAppBar position="fixed" sx={{ display: { xs: 'none', md: 'block' } }}>
                 <Toolbar>
-                    <StyledBoxLeft component="div">
-                        <StyledTitle data-route="/" onClick={clickToRoute}>
+                    <StyledBoxLeft component="div" data-route="/"  onClick={clickToRoute}>
+                        <Image
+                            src="/LogoS.png"
+                            alt="Logo web"
+                            width={27}
+                            height={27}
+                            className="cursor-pointer"
+                        />
+                        <StyledTitle className="title-app-bar" >
                             {process.env.NEXT_PUBLIC_APP_NAME}
                         </StyledTitle>
                     </StyledBoxLeft>
@@ -133,9 +153,9 @@ const C_AppBar = ({ user, isAuth }: PropsType) => {
                             />
                             <StyledBottomNavigationAction
                                 className={`${(router.pathname === "/pet" && !counter.pathLogin) && "action"}`}
-                                label={t("pet")}
-                                icon={<PetsIcon />}
-                                data-route="/pet"
+                                label={t("cart")}
+                                icon={<ShoppingCartIcon />}
+                                data-route="/cart"
                                 onClick={clickToRoute}
                             />
                             <StyledBottomNavigationAction

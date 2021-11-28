@@ -34,9 +34,11 @@
         "react-i18next": "^11.14.1",
         "react-icons": "^4.3.1",
         "react-redux": "^7.2.6",
+        "react-slick": "^0.28.1",
         "react-use-sessionstorage": "^1.0.2",
         "redux-devtools-extension": "^2.13.9",
         "redux-thunk": "^2.3.0",
+        "slick-carousel": "^1.8.1",
         "uuid": "^8.3.2"
     },
     "devDependencies": {
@@ -44,6 +46,7 @@
         "@types/dateformat": "^3.0.1",
         "@types/js-cookie": "^3.0.0",
         "@types/react": "17.0.32",
+        "@types/react-slick": "^0.23.7",
         "eslint": "8.1.0",
         "eslint-config-next": "11.1.2",
         "typescript": "4.4.4"

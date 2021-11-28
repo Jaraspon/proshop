@@ -2,11 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
+      "@/components/*": ["src/components/*"],
       "@/src/*": ["src/*"],
       "@/store/*": ["store/*"],
-      "@/database/*": ["database/*"],
-      "@/styles/*": ["styles/*"],
       "@axios": ["src/config/axios"],
     },
     "target": "es5",

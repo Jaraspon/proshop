@@ -8,14 +8,15 @@ import { useTranslation, Trans } from "react-i18next";
 // ICON
 import TranslateIcon from '@mui/icons-material/Translate';
 const StyledBtnIcon = styled(Button)(({ theme }) => ({
-    border: '1px solid #e5e8ec',
+    border: `2px solid ${theme.palette.primary.main}ad`,
     borderRadius: '9px',
     color: '#7a7a7a',
     minWidth: '39px',
     minHeight: '39px',
     background: '#fff',
     '& svg': {
-        fontSize: '1.3rem'
+        fontSize: '1.3rem',
+        color:`${theme.palette.primary.main}`
     }
 }));
 

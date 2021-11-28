@@ -35,6 +35,7 @@ import { pathLoginStore } from '@/store/actions';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import Logo from '@/src/components/subcomponent/Logo'
 const StyledForm = styled('form')(({ theme }) => ({
     paddingTop: '10px',
     paddingBottom: '30px',
@@ -148,6 +149,18 @@ const Register = ({ alert, setAlert, clickLink, loadingFade, loadingFadeTime }: 
         <>
             <Fade in={!loadingFade} timeout={loadingFadeTime} >
                 <StyledForm onSubmit={submitRegister}>
+                 <Stack
+                        sx={{ mb: 3 }}
+                        direction="column"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        spacing={1}
+                    >
+
+                        <Logo />
+
+
+                    </Stack>
                     <Stack
                         sx={{ mb: 3, pl: 1 }}
                         direction={{ xs: 'column', sm: 'row' }}

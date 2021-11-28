@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Layout from '@/components/layout/DefaultLayout';
+import Layout from '@/src/templates/DefaultLayout';
 
-import { getMiddleware } from '@/src/middleware'
+import { getMiddleware } from '@/src/utils/middleware'
 
 const Chat = (props: any) => {
     const { auth } = props;

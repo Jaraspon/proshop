@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const jwt = require('jsonwebtoken');
 // import { JWT } from 'server.config'
 const { Validator } = require('node-input-validator');
-const db = require('@/database/db');
+const db = require('@/src/config/database');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 

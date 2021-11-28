@@ -7,7 +7,7 @@ const theme = createTheme({
     palette: {
         primary: {
             // Purple and green play nicely together.
-            main: '#739fef',
+            main: '#8387F3',
         },
         secondary: {
             // This is green.A700 as hex.
@@ -27,7 +27,7 @@ const theme = createTheme({
         },
         success: {
             // This is green.A700 as hex.
-            main: '#11cb5f',
+            main: '#49b6ba',
         }
     },
     components: {

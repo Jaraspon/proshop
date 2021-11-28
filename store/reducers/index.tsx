@@ -1,6 +1,7 @@
 const initialState = {
   auth: false,
-  pathLogin: false
+  pathLogin: false,
+  categorys: [],
 
 };
 
@@ -20,6 +21,11 @@ export const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         auth: action.payload,
+      };
+    case "CATEGORY_PRODUCTS":
+      return {
+        ...state,
+        categorys: action.payload,
       };
     default:
       return { ...state };

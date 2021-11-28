@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 const jwt = require('jsonwebtoken');
 // import { JWT } from 'server.config'
-import { middleware } from '@/src/middleware'
-const db = require('@/database/db');
+import { middleware } from '@/src/utils/middleware'
+const db = require('@/src/config/database');
 
 type Data = {
     status: {

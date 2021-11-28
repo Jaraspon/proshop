@@ -9,17 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 const axios = require('axios');
 
-import Layout from '@/components/layout/DefaultLayout';
+import Layout from '@/src/templates/DefaultLayout';
 // import AuthComponent from '@/components/auth/Auth';
-import ContentMainComponent from '@/components/ContentMain';
+import ContentMainComponent from '@/src/components/ContentMain';
 // import LoadingOneComponent from '@/components/LoadingOne';
 import dynamic from 'next/dynamic'
 
 // const Layout = dynamic(() => import('@/components/layout/index'))
 // const AuthComponent = dynamic(() => import('@/components/auth/Auth'))
-const LoadingOneComponent = dynamic(() => import('@/components/LoadingOne'))
+const LoadingOneComponent = dynamic(() => import('@/src/components/subcomponent/LoadingOne'))
 
-import { getMiddleware } from '@/src/middleware'
+import { getMiddleware } from '@/src/utils/middleware'
 import { useTranslation, Trans } from "react-i18next";
 
 interface NewsFeedItemProps {

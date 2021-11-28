@@ -5,7 +5,7 @@ import { Fade, Theme } from '@mui/material';
 import { Box } from '@mui/system';
 
 import { MdPets } from 'react-icons/md';
-
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -60,14 +60,14 @@ const Loading = (props: any) => {
             <Fade in={loading} timeout={300} >
                 <div className={`${classes.root} bg-web`}>
                     <div className="box">
-                        <div className="ajax-loader">
-                            <div className="paw"><svg className="icon"><MdPets /></svg></div>
-                            <div className="paw"><svg className="icon"><MdPets /></svg></div>
-                            <div className="paw"><svg className="icon"><MdPets /></svg></div>
-                            <div className="paw"><svg className="icon"><MdPets /></svg></div>
-                            <div className="paw"><svg className="icon"><MdPets /></svg></div>
-                            <div className="paw"><svg className="icon"><MdPets /></svg></div>
-                        </div>
+                        {/* <div className="ajax-loader">
+                            <div className="paw"><svg className="icon"><LocalGroceryStoreIcon /></svg></div>
+                            <div className="paw"><svg className="icon"><LocalGroceryStoreIcon /></svg></div>
+                            <div className="paw"><svg className="icon"><LocalGroceryStoreIcon /></svg></div>
+                            <div className="paw"><svg className="icon"><LocalGroceryStoreIcon /></svg></div>
+                            <div className="paw"><svg className="icon"><LocalGroceryStoreIcon /></svg></div>
+                            <div className="paw"><svg className="icon"><LocalGroceryStoreIcon /></svg></div>
+                        </div> */}
                     </div>
                 </div>
             </Fade>

@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-sync-scripts */
-import '../styles/globals.css'
+import '@/src/assets/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider } from "react-redux";
 import { store } from "@/store/index";
@@ -7,7 +6,7 @@ import Head from 'next/head'
 import Script from 'next/script'
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from "@/src/theme";
+import theme from "@/src/config/theme";
 import { createTheme } from "@mui/material/styles";
 import "@/src/i18n/index";
 import CssBaseline from '@mui/material/CssBaseline';
@@ -24,11 +23,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
         <meta name="description" content="Welcome to Proshop" />
+        <meta name="theme-color" content="#8387F3" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <link rel="icon" href="/Logo-web.png" />
+        <link rel="icon" href="/LogoW.png" />
       </Head>
       <Script src="/assets/js/index.js" ></Script>
-      {/* <Script src="/assets/fontawesome/original/all.js" ></Script> */}
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Provider store={store} >

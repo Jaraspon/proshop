@@ -19,5 +19,8 @@
     "pet": "Pet",
     "chat": "Chat",
     "profile": "Profile",
-    "title_pet": "Choose Pathumkara"
+    "title_pet": "Choose Pathumkara",
+    "cart": "Cart",
+    "input_search": "Search",
+    "product_type": "Product| Type"
 }

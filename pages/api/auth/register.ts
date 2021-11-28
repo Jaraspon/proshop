@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 // import { JWT } from 'server.config'
 const { Validator } = require('node-input-validator');
-const db = require('@/database/db');
+const db = require('@/src/config/database');
 import dateFormat, { masks } from "dateformat";
 
 const bcrypt = require('bcrypt');

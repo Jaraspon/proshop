@@ -15,19 +15,36 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { IoIosChatbubbles } from 'react-icons/io';
 import LoginIcon from '@mui/icons-material/Login';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: '10px',
+    zIndex: 15000,
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#ffffff00',
+    boxShadow: 'none',
+}));
 
 const StyledBottomNavigation = styled(BottomNavigation)(({ theme }) => ({
     backgroundColor: '#fff',
-    borderRadius: '10px 10px 0px 0px',
+    borderRadius: '10px',
     width: '100%',
     height: '65px',
-    padding: '5px'
+    padding: '5px',
+    boxShadow: '2px 2px 7px #cfcfcf',
 }));
 
 const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
     fontSize: '1.5rem',
     borderRadius: '10px',
+    '& .MuiBottomNavigationAction-label': {
+        fontSize: '0.5rem',
+    },
     '&:hover': {
         background: `${theme.palette.primary.main}30`,
     },
@@ -62,7 +79,7 @@ const Navbar = ({ user, isAuth }: PropsType) => {
         }
     }
     return (
-        <Paper sx={{ display: { xs: 'block', md: 'none' }, position: 'fixed', bottom: 0, left: 0, right: 0, borderRadius: '10px 10px 0px 0px', zIndex: 99999999 }} elevation={3}>
+        <StyledPaper sx={{ display: { xs: 'block', md: 'none' } }} elevation={3}>
             <StyledBottomNavigation showLabels>
                 <StyledBottomNavigationAction
                     className={`${(router.pathname === "/" && !counter.pathLogin) && "action"}`}
@@ -73,9 +90,9 @@ const Navbar = ({ user, isAuth }: PropsType) => {
                 />
                 <StyledBottomNavigationAction
                     className={`${(router.pathname === "/pet" && !counter.pathLogin) && "action"}`}
-                    label={t("pet")}
-                    icon={<PetsIcon />}
-                    data-route="/pet"
+                    label={t("cart")}
+                    icon={<ShoppingCartIcon />}
+                    data-route="/cart"
                     onClick={clickToRoute}
                 />
                 <StyledBottomNavigationAction
@@ -104,7 +121,7 @@ const Navbar = ({ user, isAuth }: PropsType) => {
                 )}
 
             </StyledBottomNavigation>
-        </Paper>
+        </StyledPaper>
     )
 }
 

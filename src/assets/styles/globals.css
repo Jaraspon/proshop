@@ -8,12 +8,8 @@ body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-family: "Kanit", sans-serif !important;
-    /* margin-bottom: 10px; */
-    background: #b9f1ff !important;
-    /* background: -webkit-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -o-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -moz-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: linear-gradient(180deg, #b4c4ff, #b9f1ff); */
+    /* background: #c1fff4 !important; */
+    background: #ffffff !important;
 }
 
 a {
@@ -27,15 +23,30 @@ a {
     font-family: "Kanit", sans-serif !important;
 }
 
+.title-app-bar {
+    color: transparent;
+    background: #6d75ed;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 3px 6px rgb(255 255 255 / 69%);
+}
+
+.main-layout::-webkit-scrollbar,
 html::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-    background-color: #b9b9b975;
+    background-color: #b9b9b900;
     border-radius: 25px;
 }
 
+.main-layout::-webkit-scrollbar-thumb,
 html::-webkit-scrollbar-thumb {
-    background-color: #5f5f5f9f;
+    background-color: #cecece;
+    /* background: -webkit-linear-gradient(180deg, #a7aaff, #c1fff4);
+    background: -o-linear-gradient(180deg, #a7aaff, #c1fff4);
+    background: -moz-linear-gradient(180deg, #a7aaff, #c1fff4);
+    background: linear-gradient(180deg, #a7aaff, #c1fff4); */
     border-radius: 25px;
 }
 
@@ -47,21 +58,34 @@ p {
     margin: 0;
 }
 
+.main-layout {
+    /* overflow: auto; */
+    height: 100%;
+}
+
 .main {
-    min-height: 100vh;
-    background-color: #b9f1ff;
-    background: -webkit-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -o-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -moz-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: linear-gradient(180deg, #b4c4ff, #b9f1ff);
+    background-image: url("/bg.png") !important;
+    /* height: 100vh;
+    min-height: 100vh; */
+    background-size: cover !important;
+    background-position: center;
+    background-color: #c1fff4;
+    background: -webkit-linear-gradient(180deg, #a7aaff, #c1fff4);
+    background: -o-linear-gradient(180deg, #a7aaff, #c1fff4);
+    background: -moz-linear-gradient(180deg, #a7aaff, #c1fff4);
+    background: linear-gradient(180deg, #a7aaff, #c1fff4);
 }
 
 .bg-web {
-    background-color: #b9f1ff;
-    background: -webkit-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -o-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -moz-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: linear-gradient(180deg, #b4c4ff, #b9f1ff);
+    /* background-image: url("/bg.png") !important; */
+    background-size: cover !important;
+    background-position: center;
+    background-color: #ffffff00;
+    /* background-color: #c1fff4; */
+    /* background: -webkit-linear-gradient(180deg, #a9b1fe, #c1fff4);
+    background: -o-linear-gradient(180deg, #a9b1fe, #c1fff4);
+    background: -moz-linear-gradient(180deg, #a9b1fe, #c1fff4);
+    background: linear-gradient(180deg, #a9b1fe, #c1fff4); */
 }
 
 .fa-flip-horizontal {
@@ -73,25 +97,8 @@ p {
     background-color: #fff;
 }
 
-.btn-main {
-    background: #8bb3fc;
-    background: -webkit-linear-gradient(140deg, #8bb3fc, #86ccfc);
-    background: -o-linear-gradient(140deg, #8bb3fc, #86ccfc);
-    background: -moz-linear-gradient(140deg, #8bb3fc, #86ccfc);
-    background: linear-gradient(140deg, #8bb3fc, #86ccfc);
-    color: #fff !important;
-}
-
 .text-uppercase {
     text-transform: uppercase;
-}
-
-.bg-web {
-    background: #b4c4ff;
-    background: -webkit-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -o-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: -moz-linear-gradient(180deg, #b4c4ff, #b9f1ff);
-    background: linear-gradient(180deg, #b4c4ff, #b9f1ff);
 }
 
 .ajax-loader {
@@ -103,7 +110,7 @@ p {
     font-size: 50px;
     width: 110px;
     height: 320px;
-    color: #ffffff;
+    color: #a7aaff;
 }
 
 .ajax-loader .paw {
@@ -116,6 +123,7 @@ p {
 .ajax-loader .paw svg {
     width: 100%;
     height: 100%;
+    transform: rotate(-90deg)
 }
 
 .ajax-loader .paw .icon {
@@ -183,6 +191,7 @@ a {
 }
 
 .logo {
+    left: 16px;
     width: 0%;
     position: relative;
     animation: example 3s ease-in-out 0s;

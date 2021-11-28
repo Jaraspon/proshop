@@ -39,7 +39,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // COMPONENT
-import Logo from '@/components/Logo'
+import Logo from '@/src/components/subcomponent/Logo'
 import router from 'next/router';
 interface NewsFeedItemProps {
     alert: Object,
