@@ -3,7 +3,7 @@ import { purple } from '@mui/material/colors';
 
 const defaultTheme = createTheme();
 
-const theme = createTheme({
+let theme = createTheme({
     palette: {
         primary: {
             // Purple and green play nicely together.
@@ -30,6 +30,10 @@ const theme = createTheme({
             main: '#49b6ba',
         }
     },
+
+});
+
+theme = createTheme(theme, {
     components: {
         // Name of the component
         MuiButton: {
@@ -82,13 +86,15 @@ const theme = createTheme({
             styleOverrides: {
                 // Name of the slot
                 root: {
-
                     borderRadius: '9px',
-                   
+                    background: '#fff',
+                    '&:hover fieldset': {
+                        borderColor: `${theme.palette.primary.main} !important`
+                    },
                 },
             },
         },
-       
+
     },
 });
 

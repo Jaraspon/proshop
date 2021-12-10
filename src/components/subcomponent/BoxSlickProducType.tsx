@@ -24,9 +24,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     backgroundSize: '1000px',
     backgroundPosition: 'center',
     borderRadius: '10px',
-    ['@media (max-width: 899px)']: {
-        marginTop: '-60px',
-    },
+   
     '& .slick-slide, .slick-slide *': {
         outline: 'none',
 
