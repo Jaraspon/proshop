@@ -25,8 +25,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#ffffff00',
+    backgroundColor: '#ffffff',
     boxShadow: 'none',
+    paddingTop: '0px'
 }));
 
 const StyledBottomNavigation = styled(BottomNavigation)(({ theme }) => ({

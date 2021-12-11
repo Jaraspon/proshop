@@ -15,7 +15,7 @@ let theme = createTheme({
         },
         error: {
             // This is green.A700 as hex.
-            main: '#ee1010',
+            main: '#fd3636',
         },
         warning: {
             // This is green.A700 as hex.

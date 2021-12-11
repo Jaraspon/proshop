@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, Trans } from "react-i18next";
 import { useRouter } from 'next/router';
 import { styled } from '@mui/system';
-import { FormControl, InputBase, MenuItem, Pagination, Select, SelectChangeEvent } from '@mui/material';
-
+import { Box, FormControl, Grid, InputBase, MenuItem, Pagination, Rating, Select, SelectChangeEvent, Skeleton } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 const StyledBox = styled('div')(({ theme }) => ({
-    width: ' 85%',
     backgroundColor: ' #FFFFFF',
     boxShadow: `2px 0px 20px 0px ${theme.palette.primary.main}2b`,
-    margin: '30px auto',
+    // margin: '30px auto',
     flexDirection: 'column',
     alignItems: 'start',
     padding: ' 10px 20px',
@@ -26,16 +25,60 @@ const StyledBox = styled('div')(({ theme }) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        marginBottom: '10px',
+        '& h3': {
+            color: `${theme.palette.primary.main}`
+        }
     }
+}));
+const StyledBoxText = styled('div')(({ theme }) => ({
+    padding: '10px 15px',
+
+}));
+const StyledTitleProduct = styled('p')(({ theme }) => ({
+    fontSize: '0.9rem',
+    marginBottom: '5px',
+    height: '45px'
+}));
+const StyledPriceProduct = styled('p')(({ theme }) => ({
+    fontSize: '0.8rem',
+    color: '#fd3636',
+    marginRight: '25px'
+}));
+const StyledAddressProduct = styled('p')(({ theme }) => ({
+    fontSize: '0.6rem',
+    color: '#a1a1a1',
+    whiteSpace: 'nowrap',
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textAlign: 'end'
+
+}));
+const StyledBoxTextTop = styled('div')(({ theme }) => ({
+
+}));
+const StyledBoxTextBottom = styled('div')(({ theme }) => ({
+    // display: 'flex',
+    // justifyContent: 'space-between',
+    overflow: 'hidden',
+}));
+const StyledDataProduct = styled('div')(({ theme }) => ({
+    fontSize: ' 0.6rem',
+    textAlign: 'end'
 }));
 
 
 interface propTypes {
     title: string,
-    itmes?: []
+    items?: {
+        title: string,
+        cost: string,
+        image: string
+    }[]
 }
 
-const Name = ({ title, itmes }: propTypes) => {
+const Name = ({ title, items }: propTypes) => {
     const router = useRouter();
     const counter = useSelector((state: any) => state.reducer);
     const dispatch = useDispatch();
@@ -43,7 +86,11 @@ const Name = ({ title, itmes }: propTypes) => {
     const [word1, word2] = title.split("|");
     const { keyword, page = 1, sortBy, order = '' } = router.query;
 
+    const [loadingItems, setLoadingItems] = useState(Array.from(Array(24)))
 
+    useEffect(() => {
+        console.log(`items`, items)
+    }, [])
 
     // =============== setSortBy ===================
     const [v_sortBy, setSortBy] = useState('');
@@ -91,6 +138,10 @@ const Name = ({ title, itmes }: propTypes) => {
         })
     }
 
+    useEffect(() => {
+
+    }, [])
+
 
     useEffect(() => {
         console.log('router.query :>> ', router.query);
@@ -101,10 +152,10 @@ const Name = ({ title, itmes }: propTypes) => {
             } else {
                 console.log('(order :>> ', order);
                 console.log('(sortBy :>> ', sortBy);
-                setSortBy(order === 'asc' ? 'asc':'page');
+                setSortBy(order === 'asc' ? 'asc' : 'page');
             }
         }
-       
+
         // setDataFormUrl({ ...dataFormUrl, ["keyword"]: keyword || '' });
     }, [router.query])
     return (
@@ -132,32 +183,110 @@ const Name = ({ title, itmes }: propTypes) => {
                         </FormControl>
                     </div>
                 </div>
-                {/* <div className="container">
-                    {items.map((element, index) => {
-                        if (pages === index + 1) {
-                            return element.map((element1, index1) => {
-                                return (
-                                    <div className="box" key={index1}>
-                                        <img alt="1" src={element1.image} />
-                                        <p>{element1.title}</p>
-                                        <a className="price" href="#">$23.3</a>
-                                        <a className="buy-btn" href="#">Add To Cart</a>
-                                    </div>
-                                )
+                <div className="container">
+                    {(items?.length === 0) ? (
+                        <Grid container spacing={2}>
+                            {loadingItems.map((value, index) =>
+                                <Grid key={index} item xs={6} md={4}>
+                                    <Box sx={{ width: '100%' }}>
+                                        <Skeleton
+                                            animation="wave"
+                                            variant="rectangular"
+                                            width={'100%'}
 
-                            })
-                        }
-                    })}
-                </div> */}
-                <Pagination
-                    count={12}
-                    defaultPage={1}
-                    page={pages}
-                    siblingCount={0}
-                    variant="outlined"
-                    color="primary"
-                    onChange={handleChangePagination}
-                />
+                                            sx={{ borderRadius: '20px', height: { xs: '140px', sm: '240px', md: '150px', lg: '180px' } }}
+                                        />
+                                    </Box>
+                                    <Box sx={{ pt: 0.5 }}>
+                                        <Skeleton animation="wave" />
+                                        <Skeleton animation="wave" width="60%" />
+                                    </Box>
+                                </Grid>
+
+
+                            )}
+                        </Grid>
+                    ) : (
+                        <Grid container spacing={2} >
+                            {items?.map((val: any, index: any) => {
+                                return (
+                                    <Grid key={index} item xs={6} md={4}>
+                                        <Box
+                                            component="div"
+                                            sx={{
+                                                border: '1px solid #ECEDFE',
+                                                borderRadius: '20px',
+                                                cursor: 'pointer',
+                                                transition: '0.4s',
+                                                '&:hover': {
+                                                    background: '#ECEDFE'
+                                                }
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    width: '100%',
+                                                    height: { xs: '140px', sm: '240px', md: '150px', lg: '180px' },
+                                                    borderRadius: '20px',
+                                                    background: `url("${val.image}")`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center'
+                                                }}>
+
+                                            </Box>
+                                            <StyledBoxText>
+                                                <StyledTitleProduct className="o-text">
+                                                    {val.title}
+                                                </StyledTitleProduct>
+                                                <StyledBoxTextBottom>
+                                                    <StyledPriceProduct>
+                                                        {val.price}
+                                                    </StyledPriceProduct>
+                                                    <StyledDataProduct>
+                                                        ขายแล้ว 500 ชิ้น
+                                                    </StyledDataProduct>
+                                                    <StyledAddressProduct>
+                                                        {val.address}
+                                                    </StyledAddressProduct>
+                                                </StyledBoxTextBottom>
+                                            </StyledBoxText>
+
+                                        </Box>
+                                    </Grid>
+
+
+                                )
+                            })}
+                        </Grid>
+                    )}
+
+                </div>
+                {(items?.length === 0) ? (
+                    <Box sx={{ mt: 4, mb: 3, display: 'flex' }} component="div">
+
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                        <Skeleton sx={{ mr: 0.5 }} animation="wave" variant="circular" width={30} height={30} />
+                    </Box>
+
+                ) : (
+                    <Box sx={{ mt: 4, mb: 3 }} component="div">
+                        <Pagination
+                            count={12}
+                            defaultPage={1}
+                            page={pages}
+                            siblingCount={0}
+                            variant="outlined"
+                            color="primary"
+                            onChange={handleChangePagination}
+                        />
+                    </Box>
+                )}
+
             </StyledBox>
         </>
     )
