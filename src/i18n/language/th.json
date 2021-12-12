@@ -22,5 +22,11 @@
     "title_pet": "เลือกรับอุปการะ",
     "cart": "ตะกร้าสินค้า",
     "input_search": "ค้นหาสินค้า",
-    "product_type": "ประเภท|สินค้า"
+    "product_type": "ประเภท|สินค้า",
+    "select_type_product": "ประเภทสินค้า",
+    "text_search": "ค้นหา",
+    "text_product": "สินค้า",
+    "title_price_range": "ช่วงราคา",
+    "input_low_price": "ราคาต่ำ",
+    "input_high_price": "ราคาสูง"
 }

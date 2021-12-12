@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, Trans } from "react-i18next";
 import { useRouter } from 'next/router';
@@ -11,9 +11,10 @@ import Layout from '@/src/templates/DefaultLayout';
 import Logo from '@/components/subcomponent/LogoHome'
 import BoxProducts from '@/components/component/BoxProducts'
 import BoxProductTypes from '@/components/component/BoxProductTypes'
-import { Grid } from '@mui/material';
+import ButtonLanguage from '@/components/subcomponent/ButtonLanguage'
+import { Box, FormControlLabel, Grid, Grow, Paper, Switch } from '@mui/material';
 
-import { loadProducts } from '@/store/actions'
+import { loadProducts, loadProductsNot } from '@/store/actions'
 
 const StyledTitle = styled('section')(({ theme }) => ({
     backgroundColor: ' #FFFFFF',
@@ -70,22 +71,44 @@ interface propTypes {
 }
 
 
-
 const Search = ({ auth }: propTypes) => {
     const counter = useSelector((state: any) => state.reducer);
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
     const router = useRouter();
-    const { keyword } = router.query;
+    const { keyword, page = 1, sortBy, order = '', category = '' } = router.query;
 
+    const [keySearch, setKeySearch] = useState('')
     useEffect(() => {
+        console.log(`keyword`, typeof keyword)
         // console.log('router.query :>> ', router.query);
         // (async () => {
         dispatch(loadProducts());
-
+        if (keyword) {
+            setKeySearch(`${keyword}`)
+        } else {
+            setKeySearch(`${category}`)
+        }
 
         // })();
     }, [])
+    useEffect(() => {
+
+        if (keyword) {
+            setKeySearch(`${keyword}`)
+        } else {
+            setKeySearch(`${category}`)
+        }
+        if (category == "กระเป๋า") {
+
+            dispatch(loadProductsNot());
+        }else{
+            dispatch(loadProducts());
+        }
+        // })();
+    }, [keyword, category, page, sortBy, order])
+
+
 
     useEffect(() => {
 
@@ -101,7 +124,7 @@ const Search = ({ auth }: propTypes) => {
                     <Grid item xs={12} md={11} lg={10}>
                         <StyledTitle>
                             <div className="heading">
-                                <h3><b>ค้นหา:</b>{keyword}</h3>
+                                <h3><b>{t("text_search")}:</b>{keySearch}</h3>
                             </div>
                         </StyledTitle>
                     </Grid>
@@ -109,7 +132,7 @@ const Search = ({ auth }: propTypes) => {
 
 
                 <Grid container spacing={2} justifyContent="center">
-                    <Grid item xs={12} md={3} lg={3}>
+                    <Grid item xs={12} md={3} lg={3} sx={{ display: { xs: 'none', md: 'block' } }}>
                         <BoxProductTypes title={'ประเภท'} />
                     </Grid>
                     <Grid item xs={12} md={8} lg={7}>

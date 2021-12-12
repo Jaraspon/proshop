@@ -128,11 +128,12 @@ export default function LogoComponent({ title, image, button }: PropTypes) {
     const submitSearch = (e: any) => {
         e.preventDefault();
         console.log('dataForm :>> ', dataForm);
+        setDataForm({ search: '' })
         router.push({
             pathname: 'search',
             query: { 'keyword': dataForm.search }
         });
-
+     
     }
     return (
         <>
@@ -159,7 +160,7 @@ export default function LogoComponent({ title, image, button }: PropTypes) {
                                     'autoComplete':'off'
                                 }}
                                 onChange={changeInput}
-                                
+                                value={dataForm.search}
                                 endAdornment={
                                     <InputAdornment position="end"  >
                                         <IconButton

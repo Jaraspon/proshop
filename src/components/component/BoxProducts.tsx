@@ -3,72 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, Trans } from "react-i18next";
 import { useRouter } from 'next/router';
 import { styled } from '@mui/system';
-import { Box, FormControl, Grid, InputBase, MenuItem, Pagination, Rating, Select, SelectChangeEvent, Skeleton } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-const StyledBox = styled('div')(({ theme }) => ({
-    backgroundColor: ' #FFFFFF',
-    boxShadow: `2px 0px 20px 0px ${theme.palette.primary.main}2b`,
-    // margin: '30px auto',
-    flexDirection: 'column',
-    alignItems: 'start',
-    padding: ' 10px 20px',
-    marginBottom: '100px',
-    position: 'relative',
-    backgroundImage: `url(${"bg.png"})`,
-    backgroundSize: '1000px',
-    backgroundPosition: 'center',
-    borderRadius: '10px',
-    ['@media (max-width: 666px)']: {
-        width: '100%',
-    },
-    '& .heading': {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: '10px',
-        '& h3': {
-            color: `${theme.palette.primary.main}`
-        }
-    }
-}));
-const StyledBoxText = styled('div')(({ theme }) => ({
-    padding: '10px 15px',
+import { Box, Button, Collapse, Fade, FormControl, FormControlLabel, Grid, Grow, InputBase, MenuItem, Pagination, Rating, Select, SelectChangeEvent, Skeleton, Switch } from '@mui/material';
+import { IoOptionsOutline } from 'react-icons/io5';
 
-}));
-const StyledTitleProduct = styled('p')(({ theme }) => ({
-    fontSize: '0.9rem',
-    marginBottom: '5px',
-    height: '45px'
-}));
-const StyledPriceProduct = styled('p')(({ theme }) => ({
-    fontSize: '0.8rem',
-    color: '#fd3636',
-    marginRight: '25px'
-}));
-const StyledAddressProduct = styled('p')(({ theme }) => ({
-    fontSize: '0.6rem',
-    color: '#a1a1a1',
-    whiteSpace: 'nowrap',
-    width: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textAlign: 'end'
+import { ButtonFilterProduct, BoxFilterProduct } from '@/components/subcomponent/FilterProduct'
 
-}));
-const StyledBoxTextTop = styled('div')(({ theme }) => ({
-
-}));
-const StyledBoxTextBottom = styled('div')(({ theme }) => ({
-    // display: 'flex',
-    // justifyContent: 'space-between',
-    overflow: 'hidden',
-}));
-const StyledDataProduct = styled('div')(({ theme }) => ({
-    fontSize: ' 0.6rem',
-    textAlign: 'end'
-}));
-
-
+import { loadProductsNot } from '@/store/actions';
 interface propTypes {
     title: string,
     items?: {
@@ -78,15 +18,28 @@ interface propTypes {
     }[]
 }
 
-const Name = ({ title, items }: propTypes) => {
+const BoxProducts = ({ title, items }: propTypes) => {
     const router = useRouter();
     const counter = useSelector((state: any) => state.reducer);
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
     const [word1, word2] = title.split("|");
-    const { keyword, page = 1, sortBy, order = '' } = router.query;
+    const { keyword, page = 1, sortBy, order = '', category = '' } = router.query;
 
     const [loadingItems, setLoadingItems] = useState(Array.from(Array(24)))
+
+    useEffect(() => {
+        setSortBy('')
+        setPages(1);
+    }, [category])
+
+    const [filter, setFilter] = React.useState(false);
+
+    const handleChangeFilter = () => {
+        setFilter((prev) => !prev);
+    };
+
+
 
     useEffect(() => {
         console.log(`items`, items)
@@ -95,6 +48,7 @@ const Name = ({ title, items }: propTypes) => {
     // =============== setSortBy ===================
     const [v_sortBy, setSortBy] = useState('');
     const handleChangeSortBy = async (event: SelectChangeEvent) => {
+        dispatch(loadProductsNot());
         await setSortBy(event.target.value);
         setPages(1);
         if (event.target.value === 'sales') {
@@ -129,6 +83,8 @@ const Name = ({ title, items }: propTypes) => {
         }
     };
 
+
+
     // =============== setPages ===================
     const [pages, setPages] = useState(page ? parseInt(`${page}`) : 1);
     const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -139,7 +95,7 @@ const Name = ({ title, items }: propTypes) => {
     }
 
     useEffect(() => {
-
+        console.log(`items`, items)
     }, [])
 
 
@@ -162,8 +118,15 @@ const Name = ({ title, items }: propTypes) => {
         <>
             <StyledBox>
                 <div className="heading">
-                    <h3>{word1}<b>{word2}</b></h3>
+                    <h3>{t("text_product")}</h3>
                     <div className="sort-by">
+                        <ButtonFilterProduct
+                            filter={filter}
+                            setFilter={handleChangeFilter}
+                            sx={{ display: { xs: 'flex', md: 'none' } }}
+                            icon={<IoOptionsOutline />}
+                        />
+
                         <FormControl sx={{ m: 1 }}>
                             <Select
                                 defaultValue={v_sortBy}
@@ -182,6 +145,11 @@ const Name = ({ title, items }: propTypes) => {
                             </Select>
                         </FormControl>
                     </div>
+                </div>
+                <div>
+                    <Box sx={{ display: { xs: 'flex', md: 'none' }, height: (filter ? '100%' : '0px'), transition: 'height 0.25s ease' }}>
+                        <BoxFilterProduct filter={filter} sx={{ pt: 0 }} />
+                    </Box>
                 </div>
                 <div className="container">
                     {(items?.length === 0) ? (
@@ -207,56 +175,62 @@ const Name = ({ title, items }: propTypes) => {
                             )}
                         </Grid>
                     ) : (
+
                         <Grid container spacing={2} >
-                            {items?.map((val: any, index: any) => {
-                                return (
-                                    <Grid key={index} item xs={6} md={4}>
-                                        <Box
-                                            component="div"
-                                            sx={{
-                                                border: '1px solid #ECEDFE',
-                                                borderRadius: '20px',
-                                                cursor: 'pointer',
-                                                transition: '0.4s',
-                                                '&:hover': {
-                                                    background: '#ECEDFE'
-                                                }
-                                            }}
-                                        >
+                            {items ? (
+                                items?.map((val: any, index: any) => {
+                                    return (
+                                        <Grid key={index} item xs={6} md={4}>
                                             <Box
+                                                component="div"
                                                 sx={{
-                                                    width: '100%',
-                                                    height: { xs: '140px', sm: '240px', md: '150px', lg: '180px' },
+                                                    border: '1px solid #ECEDFE',
                                                     borderRadius: '20px',
-                                                    background: `url("${val.image}")`,
-                                                    backgroundSize: 'cover',
-                                                    backgroundPosition: 'center'
-                                                }}>
+                                                    cursor: 'pointer',
+                                                    transition: '0.4s',
+                                                    '&:hover': {
+                                                        background: '#ECEDFE'
+                                                    }
+                                                }}
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        width: '100%',
+                                                        height: { xs: '140px', sm: '240px', md: '150px', lg: '180px' },
+                                                        borderRadius: '20px',
+                                                        background: `url("${val.image}")`,
+                                                        backgroundSize: 'cover',
+                                                        backgroundPosition: 'center'
+                                                    }}>
+
+                                                </Box>
+                                                <StyledBoxText>
+                                                    <StyledTitleProduct className="o-text">
+                                                        {val.title}
+                                                    </StyledTitleProduct>
+                                                    <StyledBoxTextBottom>
+                                                        <StyledPriceProduct>
+                                                            {val.price}
+                                                        </StyledPriceProduct>
+                                                        <StyledDataProduct>
+                                                            ขายแล้ว 500 ชิ้น
+                                                        </StyledDataProduct>
+                                                        <StyledAddressProduct>
+                                                            {val.address}
+                                                        </StyledAddressProduct>
+                                                    </StyledBoxTextBottom>
+                                                </StyledBoxText>
 
                                             </Box>
-                                            <StyledBoxText>
-                                                <StyledTitleProduct className="o-text">
-                                                    {val.title}
-                                                </StyledTitleProduct>
-                                                <StyledBoxTextBottom>
-                                                    <StyledPriceProduct>
-                                                        {val.price}
-                                                    </StyledPriceProduct>
-                                                    <StyledDataProduct>
-                                                        ขายแล้ว 500 ชิ้น
-                                                    </StyledDataProduct>
-                                                    <StyledAddressProduct>
-                                                        {val.address}
-                                                    </StyledAddressProduct>
-                                                </StyledBoxTextBottom>
-                                            </StyledBoxText>
-
-                                        </Box>
-                                    </Grid>
+                                        </Grid>
 
 
-                                )
-                            })}
+                                    )
+                                })
+                            ) : (
+                                'not data'
+                            )}
+
                         </Grid>
                     )}
 
@@ -293,4 +267,124 @@ const Name = ({ title, items }: propTypes) => {
 }
 
 
-export default Name
+export default BoxProducts
+
+
+
+const StyledBox = styled('div')(({ theme }) => ({
+    backgroundColor: ' #FFFFFF',
+    boxShadow: `2px 0px 20px 0px ${theme.palette.primary.main}2b`,
+    // margin: '30px auto',
+    flexDirection: 'column',
+    alignItems: 'start',
+    padding: ' 10px 20px',
+    marginBottom: '100px',
+    position: 'relative',
+    backgroundImage: `url(${"bg.png"})`,
+    backgroundSize: '1000px',
+    backgroundPosition: 'center',
+    borderRadius: '10px',
+    ['@media (max-width: 666px)']: {
+        width: '100%',
+    },
+    '& .heading': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '10px',
+        '& h3': {
+            color: `${theme.palette.primary.main}`
+        },
+        '& .sort-by': {
+            display: 'flex',
+            alignItems: 'center',
+        }
+    }
+}));
+const StyledBoxText = styled('div')(({ theme }) => ({
+    padding: '10px 15px',
+
+}));
+const StyledTitleProduct = styled('p')(({ theme }) => ({
+    fontSize: '0.9rem',
+    marginBottom: '5px',
+    height: '45px'
+}));
+const StyledPriceProduct = styled('p')(({ theme }) => ({
+    fontSize: '0.8rem',
+    color: '#fd3636',
+    marginRight: '25px'
+}));
+const StyledAddressProduct = styled('p')(({ theme }) => ({
+    fontSize: '0.6rem',
+    color: '#a1a1a1',
+    whiteSpace: 'nowrap',
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textAlign: 'end'
+
+}));
+const StyledBoxTextTop = styled('div')(({ theme }) => ({
+
+}));
+const StyledBoxTextBottom = styled('div')(({ theme }) => ({
+    overflow: 'hidden',
+}));
+const StyledDataProduct = styled('div')(({ theme }) => ({
+    fontSize: ' 0.6rem',
+    textAlign: 'end'
+}));
+const StyledBtnIcon = styled(Button)(({ theme }) => ({
+    border: `2px solid ${theme.palette.primary.main}ad`,
+    borderRadius: '9px',
+    color: '#7a7a7a',
+    minWidth: '39px',
+    minHeight: '39px',
+    background: '#fff',
+    '& svg': {
+        fontSize: '1.3rem',
+        color: `${theme.palette.primary.main}`
+    }
+}));
+// ================= BoxFilter ====================
+const BoxFilter = styled(Box)(({ theme }) => ({
+    // [theme.breakpoints.down('md')]: {
+    //     backgroundColor: '#fff',
+    // },
+    // [theme.breakpoints.up('md')]: {
+    //     backgroundColor: theme.palette.primary.main,
+    // },
+
+    padding: '15px',
+    '& h3': {
+        marginTop: '0px'
+    },
+    '& p': {
+        cursor: 'pointer',
+        padding: ' 5px 15px',
+        width: 'fit-content',
+        borderRadius: '250px',
+        marginLeft: '20px'
+    },
+    '& .active': {
+
+        backgroundColor: `${theme.palette.primary.main}78`,
+
+    }
+}));
+
+
+
+
+// const BoxFilter = (props: any) => (
+//     <Box
+//         sx={{
+//             bgcolor: `${props.theme.palette.primary.main`,
+//             boxShadow: 1,
+//             borderRadius: 1,
+//             p: 2,
+//             minWidth: 300,
+//         }}
+//     >{props.children}</Box>
+// );

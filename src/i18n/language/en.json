@@ -22,5 +22,11 @@
     "title_pet": "Choose Pathumkara",
     "cart": "Cart",
     "input_search": "Search",
-    "product_type": "Product| Type"
+    "product_type": "Product| Type",
+    "select_type_product": "Product type",
+    "text_search": "Search",
+    "text_product": "Product",
+    "title_price_range": "Price range",
+    "input_low_price": "Low price",
+    "input_high_price": "High price"
 }

@@ -66,13 +66,14 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             }
         ]
 
-
+        console.log('not');
+        
         let __res = {
             status: {
                 success: true,
-                message: ''
+                message: 'not data'
             },
-            data,
+            
             timestamp: Math.floor(Date.now() / 1000)
         }
         res.status(200).json(__res)

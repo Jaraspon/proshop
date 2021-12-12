@@ -4,6 +4,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { useRouter } from 'next/router';
 import { styled } from '@mui/system';
 import { loadCategory } from '@/store/actions'
+import { BoxFilterProduct } from '../subcomponent/FilterProduct';
 
 const StyledBox = styled('div')(({ theme }) => ({
     backgroundColor: ' #FFFFFF',
@@ -44,8 +45,8 @@ const BoxProductTypes = ({ title }: propTypes) => {
 
     useEffect(() => {
         dispatch(loadCategory())
-        
-        
+
+
     }, [])
     useEffect(() => {
         console.log(counter.categorys);
@@ -54,16 +55,7 @@ const BoxProductTypes = ({ title }: propTypes) => {
     return (
         <>
             <StyledBox>
-                <div className="heading">
-                    <h3>{title}</h3>
-                </div>
-                <div>
-                    <p>fdhdfhdfh</p>
-                    <p>fdhdfhdfh</p>
-                    <p>fdhdfhdfh</p>
-                    <p>fdhdfhdfh</p>
-                    <p>fdhdfhdfh</p>
-                </div>
+                <BoxFilterProduct sx={{ p: 0, mt: 2 }} />
             </StyledBox>
         </>
     )

@@ -36,12 +36,12 @@ const ButtonLanguage = (props: any) => {
         console.log(`e`, e.currentTarget.dataset)
         i18n.changeLanguage(language);
         setAnchorEl(null);
-        if (language == "en") {
-            router.push(router.pathname,router.pathname, { locale: "en" })
-        } else if (language == "th") {
+        // if (language == "en") {
+        //     router.push(router.pathname,router.pathname, { locale: "en" })
+        // } else if (language == "th") {
 
-            router.push(router.pathname,router.pathname, { locale: "th" })
-        }
+        //     router.push(router.pathname,router.pathname, { locale: "th" })
+        // }
     };
     return (
         <>

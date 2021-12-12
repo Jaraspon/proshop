@@ -114,15 +114,33 @@ export const loadCategory = () => async (dispatch: any, subscribe: any) => {
 
 export const loadProducts = () => async (dispatch: any, subscribe: any) => {
    let items;
-   await  axios.get('/api/products').then((res) => {
-      // console.log(res.data.data);
-      items = res.data.data
+   await axios.get('/api/products').then((res) => {
+      console.log('fffff', res.data);
+      if (res.data.data) {
+         items = res.data.data
+      }
       // console.log('teeee',items);
    }).catch(e => {
       console.error(e);
    })
 
-   
+
+   dispatch({ type: 'ALL_PRODUCTS', payload: items })
+   return subscribe({ type: 'ALL_PRODUCTS', payload: items })
+}
+export const loadProductsNot = () => async (dispatch: any, subscribe: any) => {
+   let items;
+   await axios.get('/api/products_not').then((res) => {
+      console.log('fffff', res.data);
+      if (res.data.data) {
+         items = res.data.data
+      }
+      // console.log('teeee',items);
+   }).catch(e => {
+      console.error(e);
+   })
+
+
    dispatch({ type: 'ALL_PRODUCTS', payload: items })
    return subscribe({ type: 'ALL_PRODUCTS', payload: items })
 }
